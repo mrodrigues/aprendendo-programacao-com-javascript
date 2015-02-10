@@ -1,0 +1,66 @@
+body {
+  position: relative;
+}
+
+.table {
+  width: auto;
+}
+
+a {
+  cursor: pointer;
+}
+
+.exercise {
+  width: 60%;
+}
+
+textarea {
+  width: 100%;
+}
+
+.result {
+  width: 100%;
+  border: 1px solid grey;
+  padding: 1em;
+  min-height: 3.5em;
+}
+
+.result.success {
+  color: green;
+  border-color: green;
+}
+
+.result.failure {
+  color: red;
+  border-color: red;
+}
+
+#sidebar.affix {
+  position: fixed;
+  top:70px;
+  right: 0;
+  width:228px;
+}
+
+#sidebar a {
+  color: #888888;
+}
+
+#sidebar .active > a {
+  font-weight: bold;
+  border-left: 2px solid;
+  color: #337ab7;
+}
+
+#sidebar > li ul {
+  display: none;
+}
+
+#sidebar > li.active ul {
+  display: block;
+}
+
+#sidebar > li > ul > li > a {
+  padding-left: 2em;
+  font-size: 0.8em;
+}
