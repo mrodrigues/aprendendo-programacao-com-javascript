@@ -1,2 +1,2 @@
 #!/bin/sh
-cp -r ~/workspace/aprendendo-programacao-com-javascript/* ~/Dropbox/Public/aprendendo-programacao-com-javascript/*
+rsync -arv --exclude=".git" ~/workspace/aprendendo-programacao-com-javascript/ ~/Dropbox/Public/aprendendo-programacao-com-javascript/
