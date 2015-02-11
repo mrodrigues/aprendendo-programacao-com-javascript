@@ -224,7 +224,7 @@ Sobre os valores booleanos, podem ser aplicados os <strong>operadores lógicos</
   </tbody>\
 </table>\
 <p>Estas operações podem parecer simples ou sem propósito num primeiro momento, mas serão fundamentais \
-quando chegarmos no tópico <a href="#conditionals">Condicionais</a>. Experimente a expressão abaixo e verifique se entende o resultado.</p>\
+quando chegarmos no tópico <a href="#conditionalsAndRepetitions_0">Condicionais</a>. Experimente a expressão abaixo e verifique se entende o resultado.</p>\
         '
       },
 
@@ -255,7 +255,7 @@ funcionam como se fossem caixas rotuladas contendo um único valor de algum tipo
 um valor ou <strong>recuperar</strong> seu valor.\
 <p>Para se atribuir ("guardar" um valor dentro da caixa), usa-se o <code>nomeDaVariavel = [expressão]</code> (sim, \
 apenas um <code>=</code>), na qual <code>[expressão]</code> é qualquer expressão que resulte num valor (caso tenha dúvidas do que é uma expressão, leia de novo o exercício \
-<a href="#0_0">1.1 - Números</a>.</p>\
+<a href="#valuesAndOperators_0">1.1 - Números</a>.</p>\
 <p>Para se acessar o valor de uma variável, basta chamar seu nome: <code>nomeDaVariavel</code>. O nome de uma variável precisa seguir algumas regras: deve ser iniciado por \
 uma letra ou caracter especial permitido (em JavaScript, são <code>_</code> e <code>$</code>), e depois zero ou mais letras, caracteres especiais permitidos e números \
 (nada de espaço!). Por exemplo, alguns nomes de variáveis válidos são: <code>nomeDaVariavel</code>, <code>nome_da_variavel</code>, <code>_nome</code>, <code>$nome</code>, \
@@ -316,7 +316,7 @@ iniciando com <code>/*</code> e terminando em <code>*/</code> (a ordem do asteri
 Mais a frente esses tópicos serão melhor explicados; por enquanto, quando aparecer alguma <strong>Bizarrice do JavaScript ou da Programação em Geral</strong> será mostrado \
 o símbolo <i class="troll" />, e pede-se que se ignore o assunto por enquanto.</p>\
 <p>Existem dois "não-valores" especiais que, embora raramente sejam usados explicitamente, fazem parte do dia-a-dia de qualquer programador. \
-<code>undefined</code> (ver <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>) \
+<code>undefined</code> (ver <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>) \
 é o "valor" de variáveis não inicializadas ou de comandos que não resultam num valor. O comando <code>typeof</code> retorna uma \
 string com o tipo de um valor qualquer (teoricamente, <i class="troll" />), \
 e pode ser usado para verificar que um valor, por exemplo uma variável nunca antes utilizada, é <code>undefined</code>:</p>\
@@ -325,7 +325,7 @@ typeof variavelNuncaAntesUtilizada;\n\
 => "undefined"\
 </pre></code>\
 <p>De mesma forma, chamar a função (ver <a href="#functions_0">Funções</a>) <code>alert("Mensagem")</code> retorna um <code>undefined</code>.</p>\
-<p>O valor <code>null</code> (ver <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a>) também \
+<p>O valor <code>null</code> (ver <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a>) também \
 representa um "não-valor", mas nunca é resultado de nenhuma expressão (como o <code>undefined</code>) a não ser que \
 seja explicitamente dito, por exemplo: <code>var a = null;</code>. Este valor será usado em algumas técnicas mais avançadas de programação.</p>\
 <p>Execute o código abaixo e verifique o resultado. Remova um à um os comentários e verifique o resultado de cada um.</p>\
@@ -459,7 +459,7 @@ alert(mensagem);\n\
 
   {
     key: "conditionalsAndRepetitions",
-    title: "Condicionais e Repetições",
+    title: "3 - Condicionais e Repetições",
     exercises: [
       {
         title: "3.1 - Condicional simples",
@@ -654,7 +654,7 @@ function fatorial(x) {\n\
 fatorial(5);\n\
 </code></pre>\
 <p>Preencha a função <code>fibonacci</code> abaixo com o código que retorna o número na posição informada da \
-<a href="http://pt.wikipedia.org/wiki/Sequ%C3%AAncia_de_Fibonacci">Sequência de Fibonacci</a>. Esta sequência é iniciada com 0 e 1, \
+<a target="_blank" href="http://pt.wikipedia.org/wiki/Sequ%C3%AAncia_de_Fibonacci">Sequência de Fibonacci</a>. Esta sequência é iniciada com 0 e 1, \
 e o resto dos números é gerado somando-se os dois números anteriores na sequência <strong>infinitamente</strong>. Por exemplo: \
 <code>0, 1, (1 + 0 == 1), (1 + 1 == 2), (2 + 1 == 3), (3 + 2 == 5), (5 + 3 == 8), (8 + 5 == 13), (13 + 8 == 21), ...</code>. \
 Como não é plausível gerar uma sequência infinita de números, pedimos que gere apenas o \
@@ -752,7 +752,7 @@ que a variável possua um valor igual à <code>null</code>; enquanto isso ocorre
 Uma outra forma de ver é que a repetição apenas não ocorrerá quando <code>option</code> não for mais <code>null</code> (em programação, às vezes fica mais \
 fácil de enxergar a lógica aplicada se você inverter a pergunta).</p>\
 <p>Existe uma relação interessante entre recursão e repetição: toda função recursiva pode ser transformada em uma repetição (ou forma iterativa). De fato, \
-em algumas linguagens isso é feito <a href="http://en.wikipedia.org/wiki/Tail_call">automaticamente pelo compilador</a> (veremos mais sobre compiladores em \
+em algumas linguagens isso é feito <a target="_blank" href="http://en.wikipedia.org/wiki/Tail_call">automaticamente pelo compilador</a> (veremos mais sobre compiladores em \
 <a wip>Compiladores e Interpretadores</a>)! Veja a função <code>fatorial</code> transformada num equivalente com <code>while</code>:</p>\
 <pre><code>\
 function fatorial(x) {\n\
