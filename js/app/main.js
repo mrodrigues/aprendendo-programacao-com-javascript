@@ -19,10 +19,10 @@ app.directive("codeEditor", function() {
     <li ng-class="{active: !editMode}" ng-if="!!answer"><a ng-click="showAnswer()">Resposta</a></li>\
   </ul>\
   <div ng-show="editMode">\
-    <textarea class="editor" rows="10"></textarea>\
+    <textarea class="editor" rows="15"></textarea>\
   </div>\
   <div ng-show="!editMode">\
-    <textarea class="answer" rows="10"></textarea>\
+    <textarea class="answer" rows="15"></textarea>\
   </div>\
 </div>\
     ',
@@ -82,7 +82,7 @@ app.directive('exercise', function() {
   };
 });
 
-app.controller("ExerciseCtrl", function($scope, $sce) {
+app.controller("ExerciseCtrl", function($scope) {
   angular.extend($scope, $scope.number);
   $scope.src = $scope.prefill;
   $scope.assert = function() {
@@ -110,6 +110,14 @@ app.controller("ExerciseCtrl", function($scope, $sce) {
 
 app.controller("ApplicationCtrl", function($scope, Lessons) {
   $scope.lessons = Lessons;
+});
+
+$(function() {
+  // Gambiarra porque o HTML dos enunciados não é compilado, então não é possível usar diretivas.
+  $("[wip]").click(function(e) {
+    e.preventDefault();
+    alert("Capítulo em construção! Procure uma versão mais recente ou espere seu lançamento para ver este material!");
+  });
 });
 
 app.value("Lessons", [
@@ -255,11 +263,11 @@ uma letra ou caracter especial permitido (em JavaScript, são <code>_</code> e <
 <code>nome!</code>.</p>\
 <p>Algo que pode confundir aqueles que se lembram das aulas de matemática é que a expressão <code>x = x + 1</code> é perfeitamente válida. Não apenas isso, mas \
 é uma das mais utilizadas. Para compreendermos o que está havendo, basta reparar na fórmula da atribuição: <code>nomeDaVariavel = [expressão]</code>. Repare \
-que <code>[expressão]<code> pode ser qualquer coisa, inclusive uma variável! Quando você utiliza uma variável dentro de uma expressão, você acessa o valor guardado \
+que <code>[expressão]</code> pode ser qualquer coisa, inclusive uma variável! Quando você utiliza uma variável dentro de uma expressão, você acessa o valor guardado \
 dentro dela. Portanto, <code>x = 1; x = x + 1</code> resulta com <code>x == 2</code>.</p>\
 <p>Por fim, é uma boa prática fazer com que a inicialização (primeira atribuição) de uma variável utilize a palavra-chave <code>var</code>. \
 Por exemplo: <code>var nome = "Marcos"</code>. Após isto, as atribuições podem ocorrer de forma normal. Embora não seja obrigatório, é importante se acostumar com \
-essa boa prática por motivos que serão explicados no capítulo <a href="#replace">Escopos</a>.</p>\
+essa boa prática por motivos que serão explicados no capítulo <a wip>Escopos</a>.</p>\
 <p>Execute o código abaixo. Para passar neste exercício, altere o código para que a variável <code>nome</code> <strong>termine</strong> a execução com o valor "Daniel".</p>\
         '
       },
@@ -450,8 +458,8 @@ alert(mensagem);\n\
   },
 
   {
-    key: "conditionalsAndRepetitionStructures",
-    title: "Condicionais e Estruturas de Repetição",
+    key: "conditionalsAndRepetitions",
+    title: "Condicionais e Repetições",
     exercises: [
       {
         title: "3.1 - Condicional simples",
@@ -531,7 +539,7 @@ mas para testar a estrutura <code>if-else</code>, utilize-a.</p>\
       },
 
       {
-        title: "3.3 - Condicional de múltiplos caminhos",
+        title: "3.3 - Condicional de múltiplas vias",
         prefill: '\
 function move(x, y, direcao) {\n\
   if (direcao == "cima") {\n\
@@ -624,12 +632,14 @@ function fibonacci(x) {\n\
 <p>Agora que você conhece condicionais, pode aprender um recurso mais avançado. \
 Como foi visto antes, é possível chamar uma função dentro de outra, como o <code>alert</code> dentro do <code>notificar</code>. \
 Uma característica interessante (e um tanto quanto perigosa) das funções é que elas também podem chamar a si mesmas! Por exemplo, \
-<code>notificar</code> poderia chamar <code>notificar</code>, que chamaria <code>notificar</code>, e assim por diante. Obviamente\
+<code>notificar</code> poderia chamar <code>notificar</code>, que chamaria <code>notificar</code>, e assim por diante. Obviamente \
 essa função não seria muito útil, pois nunca chegaria à um fim, e poderia estourar a memória do computador. Este comportamento não é \
-desejável, e dá-se o nome de recursão infinita. Em geral, os programas que executam código impedem que se estoure a memória, lançando \
+desejável, ao qual dá-se o nome de recursão infinita. Em geral, os programas que executam código impedem que se estoure a memória, lançando \
 um erro (no caso de JavaScript é o <code>RangeError: Maximum call stack size exceeded</code>).</p>\
-<p>Então, para quê serve a recursão? Existem algumas soluções que são representadas facilmente através de funções recursivas, bastando \
-para isso realizar um teste que impeça a execução infinita. Um exemplo clássico é o cálculo do <strong>fatorial</strong> de um número. \
+<p>Então, para quê serve a recursão? Basicamente, ela é uma forma de se executar uma repetição de código, atualizando-se um contexto a cada \
+chamada até que se obtenha um caso básico. É um bom exercício de lógica matemática: eu posso não saber como resolver um caso complexo, mas sei \
+resolver o simples, e sei como dar um passo de cada vez para reduzir o complexo até chegar no simples.</p>\
+<p>Existem algumas soluções que são representadas facilmente através de funções recursivas. Um exemplo clássico é o cálculo do <strong>fatorial</strong> de um número. \
 O fatorial é uma operação matemática, muito utilizada em análise combinatória, que é definida como o produto de um número por todos os \
 números positivos menores que ele e maiores que zero. Ou seja, o <code>fatorial(5) == 5 * 4 * 3 * 2 * 1 == 120</code>.</p>\
 <pre><code>\
@@ -644,10 +654,139 @@ function fatorial(x) {\n\
 fatorial(5);\n\
 </code></pre>\
 <p>Preencha a função <code>fibonacci</code> abaixo com o código que retorna o número na posição informada da \
-<a href="http://pt.wikipedia.org/wiki/Sequ%C3%AAncia_de_Fibonacci">Sequência de Fibonacci</a>. Esta sequência iniciada com 0 e 1, \
+<a href="http://pt.wikipedia.org/wiki/Sequ%C3%AAncia_de_Fibonacci">Sequência de Fibonacci</a>. Esta sequência é iniciada com 0 e 1, \
 e o resto dos números é gerado somando-se os dois números anteriores na sequência <strong>infinitamente</strong>. Por exemplo: \
-<code>0, 1, 1, 2, 3, 5, 8, 13, 21, ...</code>. Como não é plausível gerar uma sequência infinita de números, pedimos que gere apenas o \
-número na posição passada como parâmetro. Para facilitar, os casos finais da recursão já estão preenchidos.</p>\
+<code>0, 1, (1 + 0 == 1), (1 + 1 == 2), (2 + 1 == 3), (3 + 2 == 5), (5 + 3 == 8), (8 + 5 == 13), (13 + 8 == 21), ...</code>. \
+Como não é plausível gerar uma sequência infinita de números, pedimos que gere apenas o \
+número na posição passada como parâmetro. Para facilitar, os casos finais da recursão já estão preenchidos; falta apenas a redução.</p>\
+        '
+      },
+
+      {
+        title: "3.5 - Repetição simples",
+        prefill: '\
+// Versão melhorada da resposta da questão anterior!\n\
+function fibonacci(x) {\n\
+  if (x < 2) {\n\
+    return x;\n\
+  } else {\n\
+    return fibonacci(x - 1) + fibonacci(x - 2);\n\
+  }\n\
+}\n\
+        ',
+        answer: '\
+// São apresentadas duas soluções neste problema, a primeira é uma tradução\n\
+// mais direta da solução recursiva, e um pouco mais simples, embora mais\n\
+// trabalhosa.\n\
+function fibonacci(x) {\n\
+  if (x < 2) {\n\
+    return x;\n\
+  } else {\n\
+    var resultado_menos_2 = 0;\n\
+    var resultado_menos_1 = 1;\n\
+    var resultado = 1;\n\
+    var i = 1;\n\
+    while (i < x) {\n\
+      resultado = resultado_menos_1 + resultado_menos_2;\n\
+      resultado_menos_2 = resultado_menos_1;\n\
+      resultado_menos_1 = resultado;\n\
+      i++;\n\
+    }\n\
+    return resultado;\n\
+  }\n\
+}\n\
+\n\
+// Esta solução é mais compacta, porém mais complexa. Sugere-se\n\
+// copiar o código de ambas e verificar que funcionam igualmente.\n\
+// Você consegue compreender como esta solução funciona?\n\
+function fibonacci(x) {\n\
+  var resultado_menos_2 = 0;\n\
+  var resultado_menos_1 = 1;\n\
+  var i = 0;\n\
+  while (i < x) {\n\
+    var temp_resultado_menos_2 = resultado_menos_2;\n\
+    resultado_menos_2 = resultado_menos_1;\n\
+    resultado_menos_1 = temp_resultado_menos_2 + resultado_menos_1;\n\
+    i++;\n\
+  }\n\
+  return resultado_menos_2;\n\
+}\n\
+        ',
+        testCases: [
+          { src: "fibonacci(2);", expected: 1 },
+          { src: "fibonacci(10);", expected: 55 },
+          { src: "fibonacci(20);", expected: 6765 }
+        ],
+        explanation: '\
+<p>Embora a recursão produza soluções muito elegantes, possui alguns problemas. Em programação, quando uma função chama outra, é realizada uma \
+<strong>troca de contexto</strong> (mais sobre isso no capítulo sobre <a wip>Escopos</a>). Para tal, os contextos de cada função são\
+empilhados em uma estrutura apropriadamente conhecida como pilha (ver <a wip>Estruturas de Dados</a>). Digamos que, no exemplo anterior,  \
+buscássemos o fatorial de 1000. Para realizar esse cálculo através de recursão, precisaríamos empilhar 1000 contextos de função! Além de gastar muita \
+memória, a operação de troca de contexto é lenta, portanto precisamos de uma forma mais adequada de se realizar repetições. Daí entram as <strong>estruturas \
+de repetição</strong>, ou <strong>loops</strong>, ou <strong>iterações</strong>! Uma estrutura de repetição nada mais é do que um bloco de código \
+(que nem nas funções e condicionais) junto à uma condição. <strong>Enquanto (while)</strong> a condição for verdadeira, o bloco é executado. Neste \
+primeiro momento, veremos apenas o pai de todas as repetições: <code>while ([expressão booleana]) { [bloco de código] }</code>. Veja este exemplo:</p>\
+<pre><code>\
+var option = null;\n\
+while (option == null) {\n\
+  option = prompt("Selecione uma opção: começar, configurar ou sair");\n\
+  switch (option) {\n\
+    case "começar":\n\
+      comecarJogo();\n\
+      break;\n\
+    case "configurar":\n\
+      configurar();\n\
+      break;\n\
+    case "sair":\n\
+      sair();\n\
+      break;\n\
+    default:\n\
+      option = null;\n\
+  }\n\
+}\n\
+</code></pre>\
+<p>Lembra que foi dito em <a href="#valuesAndOperators_6">1.7 - Não valores: undefined e null</a> que veríamos o <code>null</code> sendo utilizado em \
+técnicas de programação mais avançada? Este é um exemplo bastante comum: inicializamos com <code>null</code> uma variável que "prometemos" ser \
+eventualmente preenchida com um valor, e realizamos uma repetição até que se consiga obter um dos valores permitidos. Neste caso, enquanto a condição é \
+que a variável possua um valor igual à <code>null</code>; enquanto isso ocorrer, continuaremos perguntando ao usuário até que ele responda uma opção válida. \
+Uma outra forma de ver é que a repetição apenas não ocorrerá quando <code>option</code> não for mais <code>null</code> (em programação, às vezes fica mais \
+fácil de enxergar a lógica aplicada se você inverter a pergunta).</p>\
+<p>Existe uma relação interessante entre recursão e repetição: toda função recursiva pode ser transformada em uma repetição (ou forma iterativa). De fato, \
+em algumas linguagens isso é feito <a href="http://en.wikipedia.org/wiki/Tail_call">automaticamente pelo compilador</a> (veremos mais sobre compiladores em \
+<a wip>Compiladores e Interpretadores</a>)! Veja a função <code>fatorial</code> transformada num equivalente com <code>while</code>:</p>\
+<pre><code>\
+function fatorial(x) {\n\
+  var resultado = x;\n\
+  x--; // Lembra desse operador + atribuição?\n\
+  while (x > 1) {\n\
+    resultado *= x; // E desse?\n\
+    x--;\n\
+  }\n\
+  return resultado;\n\
+}\n\
+</code></pre>\
+<p>Reparou que a expressão condicional do caso básico na recursão virou a expressão condicional da repetição? Isso, em conjunto com uma etapa de inicialização \
+(que em geral envolve a repetição de algum comando dentro do bloco de código da repetição, neste caso o <code>x--</code>), é uma forma bastante usada para a \
+essa transformação! Claro que, como quase tudo em programação, sempre existe mais de uma solução possível:</p>\
+<pre><code>\
+function fatorial(x) {\n\
+  var resultado = 1;\n\
+  var i = 1;\n\
+  while (i <= x) {\n\
+    resultado *= i;\n\
+    i++;\n\
+  }\n\
+  return resultado;\n\
+}\n\
+</code></pre>\
+<p>Este formato, com a inicialização de uma <code>variável de controle do loop</code>, com o incremento/decremento da mesma sendo executado ao final do \
+bloco de código até que um limite bem definido o faça encerrar a repetição, é tão comum que, como em geral acontece na programação, foi criado um atalho \
+para ele, o qual será explicado em <a wip>Repetição definida: for</a>. O que podemos perceber nas soluções apresentadas é que perde-se a \
+elegância da recursividade, em que se aborda casos simples e a redução até os mesmos através da mudança de contexto, e passa-se a controlar a execução \
+através de alguma estrutura de controle. É encorajado que, quando se deparar com algum problema difícil, busque-se uma solução recursiva, em geral mais \
+simples de se obter, para depois convertê-la para o método iterativo uma vez que se prove correta.</p>\
+<p>Neste exercício, você deverá transformar a função <code>fibonacci</code>, vista no exercício passado, para o método iterativo. Fica a lembrança: será necessário \
+armazenar o contexto atual e atualizá-lo através de alguma estrutura de controle, ao invés de simplesmente realizar a redução à casos mais simples da recursão.</p>\
         '
       }
     ]
