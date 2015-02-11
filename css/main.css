@@ -64,3 +64,11 @@ textarea {
   padding-left: 2em;
   font-size: 0.8em;
 }
+
+i.troll {
+  background-image: url("../images/trollface.png");
+  background-size: 100%;
+  width: 3em;
+  height: 1.5em;
+  display: inline-block;
+}

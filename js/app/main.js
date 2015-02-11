@@ -87,18 +87,20 @@ app.controller("ExerciseCtrl", function($scope, $sce) {
   $scope.src = $scope.prefill;
   $scope.assert = function() {
     try {
-      $scope.result = "=> " + eval($scope.src);
+      var output = "=> " + eval($scope.src);
+      var result = "";
       for (testCase of $scope.testCases || []) {
         expectationResult = eval(testCase.src);
         if (expectationResult == testCase.expected) {
-          $scope.result += "\nSucesso!";
+          result = "\nSucesso!";
           $scope.resultClass = "success";
         } else {
-          $scope.result += "\nFalha...\nEsperava que " + testCase.src + " fosse igual à " + testCase.expected + ", mas obteve " + expectationResult;
+          result += "\nFalha...\nEsperava que " + testCase.src + " fosse igual à " + testCase.expected + ", mas obteve " + expectationResult;
           $scope.resultClass = "failure";
           break;
         }
       }
+      $scope.result = output + result;
     } catch(e) {
       $scope.result = e.toString();
       $scope.resultClass = "failure";
@@ -251,10 +253,96 @@ uma letra ou caracter especial permitido (em JavaScript, são <code>_</code> e <
 (nada de espaço!). Por exemplo, alguns nomes de variáveis válidos são: <code>nomeDaVariavel</code>, <code>nome_da_variavel</code>, <code>_nome</code>, <code>$nome</code>, \
 <code>$_nome$1</code> (mas não faça isso pelamordedeus, vamos manter os nomes simples). Alguns nomes inválidos: <code>nome da variavel</code>, <code>1_nome</code>, \
 <code>nome!</code>.</p>\
+<p>Algo que pode confundir aqueles que se lembram das aulas de matemática é que a expressão <code>x = x + 1</code> é perfeitamente válida. Não apenas isso, mas \
+é uma das mais utilizadas. Para compreendermos o que está havendo, basta reparar na fórmula da atribuição: <code>nomeDaVariavel = [expressão]</code>. Repare \
+que <code>[expressão]<code> pode ser qualquer coisa, inclusive uma variável! Quando você utiliza uma variável dentro de uma expressão, você acessa o valor guardado \
+dentro dela. Portanto, <code>x = 1; x = x + 1</code> resulta com <code>x == 2</code>.</p>\
 <p>Por fim, é uma boa prática fazer com que a inicialização (primeira atribuição) de uma variável utilize a palavra-chave <code>var</code>. \
 Por exemplo: <code>var nome = "Marcos"</code>. Após isto, as atribuições podem ocorrer de forma normal. Embora não seja obrigatório, é importante se acostumar com \
 essa boa prática por motivos que serão explicados no capítulo <a href="#replace">Escopos</a>.</p>\
 <p>Execute o código abaixo. Para passar neste exercício, altere o código para que a variável <code>nome</code> <strong>termine</strong> a execução com o valor "Daniel".</p>\
+        '
+      },
+
+      {
+        title: "1.6 - Comentários",
+        prefill: '\
+// Comentário de uma linha\n\
+\n\
+/*\n\
+   Comentário\n\
+   de\n\
+   várias\n\
+   linhas\n\
+*/\n\
+\n\
+/*\n\
+ * Comentário\n\
+ * de\n\
+ * várias\n\
+ * linhas\n\
+ * com\n\
+ * bom estilo\n\
+ */\n\
+        ',
+        explanation: '\
+<p>Isso é um pouco trapaça, afinal comentários não são realmente valores, mas é uma boa hora de falarmos deles. \
+Comentários são, como o próprio nome diz, observações sobre o nosso código. Eles são completamente ignorados pelo \
+programa que executa seu código, e servem apenas para ajudar na hora de ler um código. Devem ser evitados, uma vez \
+que espera-se sempre escrever códigos tão simples e legíveis que não sejam precisas explicações adicionais, mas em \
+alguns lugares são apropriados.</p>\
+<p>Um comentário pode ser de apenas uma linha, sendo iniciado por <code>//</code>, ou abranger várias linhas, \
+iniciando com <code>/*</code> e terminando em <code>*/</code> (a ordem do asterisco-barra ou barra-asterisco é importante).</p>\
+        '
+      },
+
+      {
+        title: "1.7 - Não-valores: undefined e null",
+        prefill: '\
+// alert("Mensagem");\n\
+// typeof variavelNaoExistente;\n\
+// typeof undefined;\n\
+        ',
+        explanation: '\
+<p><strong>ATENÇÃO:</strong> Este assunto envolve alta concentração de <strong>Bizarrices do JavaScript ou da Programação em Geral</strong> <i class="troll" />. \
+Mais a frente esses tópicos serão melhor explicados; por enquanto, quando aparecer alguma <strong>Bizarrice do JavaScript ou da Programação em Geral</strong> será mostrado \
+o símbolo <i class="troll" />, e pede-se que se ignore o assunto por enquanto.</p>\
+<p>Existem dois "não-valores" especiais que, embora raramente sejam usados explicitamente, fazem parte do dia-a-dia de qualquer programador. \
+<code>undefined</code> (ver <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>) \
+é o "valor" de variáveis não inicializadas ou de comandos que não resultam num valor. O comando <code>typeof</code> retorna uma \
+string com o tipo de um valor qualquer (teoricamente, <i class="troll" />), \
+e pode ser usado para verificar que um valor, por exemplo uma variável nunca antes utilizada, é <code>undefined</code>:</p>\
+<pre><code>\
+typeof variavelNuncaAntesUtilizada;\n\
+=> "undefined"\
+</pre></code>\
+<p>De mesma forma, chamar a função (ver <a href="#functions_0">Funções</a>) <code>alert("Mensagem")</code> retorna um <code>undefined</code>.</p>\
+<p>O valor <code>null</code> (ver <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a>) também \
+representa um "não-valor", mas nunca é resultado de nenhuma expressão (como o <code>undefined</code>) a não ser que \
+seja explicitamente dito, por exemplo: <code>var a = null;</code>. Este valor será usado em algumas técnicas mais avançadas de programação.</p>\
+<p>Execute o código abaixo e verifique o resultado. Remova um à um os comentários e verifique o resultado de cada um.</p>\
+        '
+      },
+
+      {
+        title: "1.8 - Operador + atribuição",
+        prefill: '\
+var i = 10;\n\
+i = i + 1\n\
+i = i / 2;\n\
+i = i + 2;\n\
+i = i * 2;\n\
+i = i % 2;\n\
+i = i - 1;\n\
+alert(i);\n\
+        ',
+        explanation: '\
+<p>A sequência <code>variavel = variavel [operador] outraVariavel</code> é extremamente comum em programação, tanto que foram criados atalhos: \
+<code>a += 1</code>, <code>a *= 2</code>, <code>a -= 1</code>, <code>a /= 2</code> e <code>a %= 2</code> são todos comandos válidos e equivalentes à sequência \
+mostrada, com os respectivos operadores. A expressão <code>saudacoes += " Daniel!"</code> também funciona como se esperaria. Além disso, para um dos casos mais \
+comuns de todos, o <strong>incremento</strong> e <strong>decremento</strong> podem ser reduzidos, respectivamente, à <code>variavel++</code> e <code>variavel--</code>.</p>\
+<p>Isto conclui o assunto sobre variáveis e seus operadores. Ainda existem alguns operadores especiais, utilizados para operações com números binários, que não serão \
+abordados. No exemplo a seguir, conserte o código dado para utilizar as respectivas versões simplificadas.</p>\
         '
       }
     ]
@@ -282,9 +370,9 @@ function notificar() {\n\
   alert(mensagem);\n\
 }\
 </code></pre>\
-<p>A função <code>alert</code> é nativa do JavaScript, e mostra uma mensagem para o usuário. A mensagem, um valor <strong>string</strong>, é passado como argumento para \
-a função (ver <a href="#functions_1">2.2 - Parâmetros e Argumentos</a>). A função que declaramos, então, serve para notificar o usuário de um erro. \
-Uma outra forma de declarar uma função é:</p>\
+<p>A função <code>alert</code> é nativa do JavaScript, e mostra uma mensagem para o usuário. A mensagem, um valor <strong>string</strong>, é passado como \
+<strong>argumento</strong> para a função (ver <a href="#functions_1">2.2 - Parâmetros e Argumentos</a>). A função que declaramos, então, serve para notificar \
+o usuário de um erro. Uma outra forma de declarar uma função é:</p>\
 <pre><code>\
 var notificar = function () {\n\
   var mensagem = "Ocorreu um erro!";\n\
@@ -301,7 +389,33 @@ pegue isso que eu acabei de tirar da caixa e execute.</p>\
       },
 
       {
-        title: "2.2 - Parâmetros e Argumentos"
+        title: "2.2 - Parâmetros e Argumentos",
+        prefill: '\
+function notificar(codigo, erro) {\n\
+  alert("[" + codigo + "] Ocorreu um erro: " + erro);\n\
+}\n\
+\n\
+notificar(403, "Usuário não logado");\
+        ',
+        explanation: '\
+<p>No exemplo anterior, a função <code>alert</code> recebeu um <strong>argumento</strong>, ou seja, um valor, que foi usado para mostrar uma mensagem para o\
+usuário. Também podemos declarar funções que recebam argumentos, basta listar os <strong>parâmetros</strong> que receberão esses valores. Por exemplo:</p>\
+<pre><code>\
+function notificar(codigo, erro) {\n\
+  alert("[" + codigo + "] Ocorreu um erro: " + erro);\n\
+}\n\
+\n\
+notificar(403, "Usuário não logado");\n\
+</code></pre>\
+<p>Neste exemplo, <code>403</code> e <code>"Usuário não logado"</code> são os argumentos, os <strong>valores</strong> passados para a função, e \
+<code>codigo</code> e <code>erro</code> são os parâmetros, ou seja, tipos especiais de <strong>variável</strong> que recebem os argumentos passados\
+para a função de acordo com a <strong>ordem</strong>. Ou seja, <code>403</code> vai parar dentro de <code>codigo</code>. Repare que, caso o valor a ser passado \
+como argumento esteja dentro de uma variável, esta não precisa possuir o mesmo nome do respectivo parâmetro, uma vez que é utilizada no contexto de expressão, ou seja, \
+apenas seu valor é utilizado. Por exemplo: <code>var treta = "Usuário não logado"; notificar(403, treta)</code> funciona de forma semelhante à mostrada acima. De \
+mesmo modo, não é necessário se preocupar caso uma função possua um parâmetro com o mesmo nome de uma variável utilizada em outro lugar. Por exemplo: \
+<code>var erro = "Outro erro não relacionado"; notificar(403, "Usuário não logado")</code> não altera o valor da variável <code>erro</code> (experimente!).</p>\
+<p>Experimente trocar a ordem dos <strong>parâmetros</strong> na função abaixo. Em seguida troque a ordem dos <strong>argumentos</strong>.</p>\
+        '
       },
 
       {
@@ -311,14 +425,230 @@ function divisivel(a, b) {\n\
   return a % b == 0;\n\
 }\
         ',
+        prefill: 'function divisivel(a, b) {\n}',
         explanation: '\
-<p>Crie uma função <code>divisivel(a, b)</code> que retorne <code>true</code> caso\
-<code>a</code> seja divisível por <code>b</code>, e <code>false</code> em caso contrário.</p>\
+<p>Uma função pode possuir um valor de <strong>retorno</strong>, sendo especificado através do comando <code>return</code>. \
+Isto significa que, após ser chamada, ela <strong>retornará</strong> o valor especificado no mesmo local onde foi chamada. Por exemplo:</p>\
+<pre><code>\
+function mensagemDeErro(codigo, erro) {\n\
+  return "[" + codigo + "] Ocorreu um erro: " + erro;\n\
+}\n\
+\n\
+var mensagem = mensagemDeErro(403, "Usuário não autorizado");\n\
+alert(mensagem);\n\
+</code></pre>\
+<p>Repare que o retorno de uma função é um valor como qualquer outro, e pode ser armazenado numa variável ou enviado para uma função, como qualquer outro.</p>\
+<p>Como exercício, crie uma função <code>divisivel(a, b)</code> que retorne <code>true</code> caso\
+<code>a</code> seja divisível por <code>b</code>, e <code>false</code> em caso contrário. Caso precise de ajuda, clique na aba <strong>Resposta</strong>.</p>\
         ',
         testCases: [
           { src: "divisivel(10, 2)", expected: true },
           { src: "divisivel(10, 3)", expected: false }
         ]
+      }
+    ]
+  },
+
+  {
+    key: "conditionalsAndRepetitionStructures",
+    title: "Condicionais e Estruturas de Repetição",
+    exercises: [
+      {
+        title: "3.1 - Condicional simples",
+        prefill: '\
+if (2 * 3 == 5) {\n\
+  alert("Entrou no condicional!");\n\
+}\
+        ',
+        explanation: '\
+<p>A maior diferença entre um computador e outros tipos de máquinas como calculadoras é a capacidade de tomar decisões. \
+Sem isso, um programa serviria apenas para atender um único caso sempre, e mesmo assim não conseguiria resolver diversos \
+problemas. A estrutura condicional <code>if ([expressão booleana]) { [bloco de código] }</code> permite que, dada uma <code>[expressão booleana]</code> \
+qualquer, caso seu resultado seja <code>true</code>, o <code>[bloco de código]</code> seja executado. As chaves somente são necessárias caso o bloco de \
+código tenha mais de uma linha, mas vai por mim, use sempre com chaves; poupa muito trabalho na hora de debuggar. Por exemplo, em algum jogo:</p>\
+<pre><code>\
+vida = vida - dano;\n\
+if (vida <= 0) {\n\
+  morre();\n\
+}\n\
+</code></pre>\
+<p>No exemplo abaixo, experimente usar o operador lógico de negação para fazer com que o código dentro do condicional seja executado.</p>\
+        '
+      },
+
+      {
+        title: "3.2 - Condicional de duas vias",
+        prefill: '\
+function somaComLimite(valorAtual, valorASomar, limite) {\n\
+  return valorAtual + valorASomar;\n\
+}\n\
+        ',
+        testCases: [
+          { src: "somaComLimite(5, 4, 10);", expected: 9 },
+          { src: "somaComLimite(5, 5, 10);", expected: 10 },
+          { src: "somaComLimite(5, 6, 10);", expected: 10 }
+        ],
+        answer: '\
+function somaComLimite(valorAtual, valorASomar, limite) {\n\
+  var soma = valorAtual + valorASomar;\n\
+  if (soma > limite) {\n\
+    return limite;\n\
+  } else {\n\
+    return soma;\n\
+  }\n\
+}\n\
+        ',
+        explanation: '\
+<p>Existem muitas operações que são mutuamente exclusivas. Por exemplo, digamos que estejamos fazendo um clone de Super Mario Bros:</p>\
+<pre><code>\
+if (acertouInimigo()) {\n\
+  if (pegouEstrela()) {\n\
+    mataInimigo();\n\
+  }\n\
+\n\
+  if (!pegouEstrela()) {\n\
+    morre();\n\
+  }\n\
+}\n\
+</code></pre>\
+<p>É um tanto quanto repetitivo reescrever o teste com uma negativa logo abaixo. Como esse é um caso muito comum, foi criada uma estrutura \
+especial para ele:</p>\
+<pre><code>\
+if (acertouInimigo()) {\n\
+  if (pegouEstrela()) {\n\
+    mataInimigo();\n\
+  } else {\n\
+    morre();\n\
+  }\n\
+}\n\
+</code></pre>\
+<p>Neste exemplo, também pudemos notar que é possível <strong>aninhar</strong> condicionais (colocar um dentro do outro), assim como o valor da \
+<strong>indentação</strong> ("nível" de espaçamento ou tabulação de cada bloco de código).</p>\
+<p>Neste exercício, conserte a função <code>somaComLimite(valorAtual, valorASomar, limite)</code> para que ela retorne <code>valorAtual + valorASomar</code> apenas caso \
+esta soma seja menor ou igual ao <code>limite</code>. Caso o ultrapasse, retorne o <code>limite</code>. Este exercício possui mais de uma forma de se resolver, \
+mas para testar a estrutura <code>if-else</code>, utilize-a.</p>\
+        '
+      },
+
+      {
+        title: "3.3 - Condicional de múltiplos caminhos",
+        prefill: '\
+function move(x, y, direcao) {\n\
+  if (direcao == "cima") {\n\
+    y += 1;\n\
+  } else if (direcao == "baixo") {\n\
+    y -= 1;\n\
+  } else if (direcao == "direita") {\n\
+    x += 1;\n\
+  } else if (direcao == "esquerda") {\n\
+    x -= 1;\n\
+  } else {\n\
+    alert("Direção inexistente! Movimento cancelado.");\n\
+  }\n\
+\n\
+  return "(" + x + ", " + y + ")";\n\
+}\n\
+\n\
+alert(move(10, 10, prompt("Para direção deseja seguir?")));\
+        ',
+        explanation: '\
+<p>Outra estrutura bastante comum é o encadeamento de <code>if-else</code>, por exemplo para a seleção de uma opção:</p>\
+<pre><code>\
+var opcao = prompt("Qual opção deseja executar?");\n\
+if (opcao == "começar") {\n\
+  comecarJogo();\n\
+} else if (opcao == "configurar") {\n\
+  configurar();\n\
+} else if (opcao == "sair") {\n\
+  sair();\n\
+} else {\n\
+  alert("Opção inválida!");\n\
+}\n\
+</code></pre>\
+<p>No código acima, a função <code>prompt</code> abre uma caixa para que o usuário digite uma opção e a retorna, neste caso para a variável <code>opcao</code>. \
+Como essa estrutura também é bastante comum, foi criada uma forma mais sucinta de se executá-la:</p>\
+<pre><code>\
+var opcao = prompt("Qual opção deseja executar?");\n\
+switch (opcao) {\n\
+  case "começar":\n\
+    comecarJogo();\n\
+    break;\n\
+  case "configurar":\n\
+    configurar();\n\
+    break;\n\
+  case "sair":\n\
+    sair();\n\
+    break;\n\
+  default:\n\
+    alert("Opção inválida!");\n\
+}\n\
+</code></pre>\
+<p>Este código possui funcionamento semelhante ao anterior. O <code>default</code> funciona como o último <code>else</code> da cadeia de <code>if-else</code>, \
+e é sempre uma boa ideia colocá-lo para impedir que opções incorretas passem despercebidas. \
+O <code>break</code> é necessário pois, caso não fosse colocado e a primeira opção fosse selecionada, \
+todas as outras executariam também. O porquê disso fica para outro dia <i class="troll" />.</p>\
+<p>Neste exercício, conserte o código abaixo para utilizar o <code>switch</code>.</p>\
+        '
+      },
+
+      {
+        title: "3.4 - Recursão",
+        prefill: '\
+function fibonacci(x) {\n\
+  if (x == 0) {\n\
+    return 0;\n\
+  } else if (x == 1) {\n\
+    return 1;\n\
+  } else {\n\
+    return // PREENCHA AQUI\n\
+  }\n\
+}\n\
+        ',
+        answer: '\
+function fibonacci(x) {\n\
+  if (x == 0) {\n\
+    return 0;\n\
+  } else if (x == 1) {\n\
+    return 1;\n\
+  } else {\n\
+    return fibonacci(x - 1) + fibonacci(x - 2);\n\
+  }\n\
+}\n\
+        ',
+        testCases: [
+          { src: "fibonacci(2);", expected: 1 },
+          { src: "fibonacci(10);", expected: 55 },
+          { src: "fibonacci(20);", expected: 6765 }
+        ],
+        explanation: '\
+<p>Agora que você conhece condicionais, pode aprender um recurso mais avançado. \
+Como foi visto antes, é possível chamar uma função dentro de outra, como o <code>alert</code> dentro do <code>notificar</code>. \
+Uma característica interessante (e um tanto quanto perigosa) das funções é que elas também podem chamar a si mesmas! Por exemplo, \
+<code>notificar</code> poderia chamar <code>notificar</code>, que chamaria <code>notificar</code>, e assim por diante. Obviamente\
+essa função não seria muito útil, pois nunca chegaria à um fim, e poderia estourar a memória do computador. Este comportamento não é \
+desejável, e dá-se o nome de recursão infinita. Em geral, os programas que executam código impedem que se estoure a memória, lançando \
+um erro (no caso de JavaScript é o <code>RangeError: Maximum call stack size exceeded</code>).</p>\
+<p>Então, para quê serve a recursão? Existem algumas soluções que são representadas facilmente através de funções recursivas, bastando \
+para isso realizar um teste que impeça a execução infinita. Um exemplo clássico é o cálculo do <strong>fatorial</strong> de um número. \
+O fatorial é uma operação matemática, muito utilizada em análise combinatória, que é definida como o produto de um número por todos os \
+números positivos menores que ele e maiores que zero. Ou seja, o <code>fatorial(5) == 5 * 4 * 3 * 2 * 1 == 120</code>.</p>\
+<pre><code>\
+function fatorial(x) {\n\
+  if (x > 1) {\n\
+    return x * fatorial(x - 1);\n\
+  } else {\n\
+    return 1;\n\
+  }\n\
+}\n\
+\n\
+fatorial(5);\n\
+</code></pre>\
+<p>Preencha a função <code>fibonacci</code> abaixo com o código que retorna o número na posição informada da \
+<a href="http://pt.wikipedia.org/wiki/Sequ%C3%AAncia_de_Fibonacci">Sequência de Fibonacci</a>. Esta sequência iniciada com 0 e 1, \
+e o resto dos números é gerado somando-se os dois números anteriores na sequência <strong>infinitamente</strong>. Por exemplo: \
+<code>0, 1, 1, 2, 3, 5, 8, 13, 21, ...</code>. Como não é plausível gerar uma sequência infinita de números, pedimos que gere apenas o \
+número na posição passada como parâmetro. Para facilitar, os casos finais da recursão já estão preenchidos.</p>\
+        '
       }
     ]
   }
