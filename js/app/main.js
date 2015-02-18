@@ -64,7 +64,7 @@ app.directive('exercise', function() {
     template: '\
 <div class="panel">\
   <div class="panel-heading">\
-    <h2 class="panel-title" id="{{indexName}}">{{title}}</h2>\
+    <h3 class="panel-title" id="{{indexName}}">{{title}}</h3>\
   </div>\
   <div class="panel-body exercise">\
     <p ng-bind-html="explanation"></p>\

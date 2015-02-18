@@ -19,9 +19,25 @@
   </head>
   <body ng-app="aprendendoJavascript" data-spy="scroll" data-target="#sidebar" ng-controller="ApplicationCtrl">
 
+    <div class="container">
+      <div class="row exercise">
+        <h1>Aprendendo Programação com JavaScript</h1>
+        <p>Este é um curso formal e extenso, indicado àqueles que desejam aprender as bases da programação. 
+        Se você tem curiosidade sobre o que é programação, ou já sabe programar e apenas quer aprender JavaScript, 
+        este curso não é indicado para você. Nós abordaremos todos os conhecimentos necessários para se tornar 
+        um programador em qualquer linguagem, com foco em algoritmo. A linguagem JavaScript foi escolhida para 
+        o ensino apenas por sua ubiquidade e simplicidade. Para usar este curso, basta um browser moderno; não 
+        há configurações de ambiente necessárias.</p>
+        <p>Qualquer código utilizado ao longo dos exercícios pode ser 
+        executado diretamente no console do próprio browser. Para abrí-lo no Google Chrome, basta apertar <kbd>F12</kbd> 
+        no Windows e Linux, ou <kbd>alt</kbd>+<kbd>command</kbd>+<kbd>i</kbd>, e clicar em <strong>Console</strong>. 
+        Caso utilize outro browser, ver <a href="http://webmasters.stackexchange.com/a/77337">esta lista de atalhos</a>.</p>
+        <p>Este curso funciona offline também, para isso basta salvar a página e acessá-la de seu browser normalmente.</p>
+      </div>
+    </div>
     <div class="container" ng-repeat="lesson in lessons">
       <div class="row">
-        <h1 id="{{lesson.key}}">{{lesson.title}}</h1>
+        <h2 id="{{lesson.key}}">{{lesson.title}}</h2>
         <exercise number="exercise" index-name="lesson.key + '_' + $index" ng-repeat="exercise in lesson.exercises"></exercise>
       </div>
     </div>
