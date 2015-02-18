@@ -68,9 +68,11 @@ app.directive('exercise', function() {
   </div>\
   <div class="panel-body exercise">\
     <p ng-bind-html="explanation"></p>\
-    <code-editor ng-model="src" answer="answer" prefill="prefill"></code-editor>\
-    <pre class="result" ng-class="resultClass">{{result}}</pre>\
-    <button class="btn btn-primary" ng-click="assert()">Executar</button>\
+    <div class="code" ng-show="!hideCode">\
+      <code-editor ng-model="src" answer="answer" prefill="prefill"></code-editor>\
+      <pre class="result" ng-class="resultClass">{{result}}</pre>\
+      <button class="btn btn-primary" ng-click="assert()">Executar</button>\
+    </div>\
   </div>\
 </div>\
     ',
@@ -122,6 +124,126 @@ $(function() {
 
 app.value("Lessons", [
   {
+    key: "concepts",
+    title: "0 - Conceitos",
+    exercises: [
+      {
+        title: "0.1 - O que é programação?",
+        prefill: 'alert("Hello World!");',
+        explanation: '\
+<p>Programar, em seu sentido mais básico, significa preparar uma sequência de instruções para que um computador execute. Existem instruções para \
+várias coisas diferentes, algumas simples como mostrar um resultado na tela para o usuário, outras tão complexas quanto ordenar uma lista \
+de contatos por ordem alfabética. Algumas precisam ser construídas, outras vem prontas na <strong>linguagem de programação</strong>.</p>\
+<p>Linguagens de programação são "idiomas" usados para enviar as instruções para o computador. Elas variam de complexidade e poder, e atendem \
+à todos os gostos. Elas também servem para diferentes propósitos, algumas criadas para atender uma única necessidade, como o controle do maquinário \
+uma fábrica, outras com propósito geral, podendo ser usadas desde comunicação com sensores em hardware até produzir páginas para a Web. \
+No futuro, discutiremos sobre diferentes tipos de linguagens, de compiladas à interpretadas, de imperativas à declarativas. \
+Por hora, basta saber que utilizaremos neste curso a linguagem JavaScript, que está presente em todos os browsers modernos. \
+Começaremos aprendendo as bases da programação e exercitando o raciocínio lógico, depois entrando em técnicas mais avançadas, \
+para então experimentarmos usos mais práticos dos conhecimentos adquiridos.</p>\
+<p>Execute o código abaixo e veja em ação o programa <i>cliché</i> que é comumente o primeiro a ser executado em uma nova linguagem \
+que se está aprendendo ou desenvolvendo.</p>\
+        '
+      },
+
+      {
+        title: "0.2 - Zeros e Uns",
+        hideCode: true,
+        explanation: '\
+<p>É comum a cultura popular referenciar programas de computador como feitos apenas com 0s e 1s. Isto é, de certa forma, verdade. \
+A unidade básica que o computador compreende é o <strong>bit</strong>, o qual pode ser armazenado em diversas peças de hardware, e \
+pode possuir apenas um de dois valores: desligado (0) e ligado (1). O assunto de como o computador traduz as sequências de bits em \
+instruções e valores úteis foge do escopo deste curso, mas um resumo simples é que, no caso de valores numéricos, nossos números no \
+sistema decimal (contam-se 10 números entre cada "vai um") são convertidos para o sistema binário (contam-se 2 números entre cada \
+"vai um"). Por exemplo:</p>\
+<table class="table">\
+  <thead>\
+    <tr>\
+      <td>Decimal (base 10)</td>\
+      <td>Binário (base 2)</td>\
+    </tr>\
+  </thead>\
+  <tbody>\
+    <tr>\
+      <td>1</td>\
+      <td>0001</td>\
+    </tr>\
+    <tr>\
+      <td>2</td>\
+      <td>0010</td>\
+    </tr>\
+    <tr>\
+      <td>3</td>\
+      <td>0011</td>\
+    </tr>\
+    <tr>\
+      <td>4</td>\
+      <td>0100</td>\
+    </tr>\
+    <tr>\
+      <td>5</td>\
+      <td>0101</td>\
+    </tr>\
+    <tr>\
+      <td>6</td>\
+      <td>0110</td>\
+    </tr>\
+    <tr>\
+      <td>7</td>\
+      <td>0111</td>\
+    </tr>\
+    <tr>\
+      <td>8</td>\
+      <td>1000</td>\
+    </tr>\
+<p>Para o caso de instruções, existem tabelas de tradução. Poderíamos supor, por exemplo, que a sequência de bits <code>0001</code> signifique soma, e \
+que <code>0001 0010 0001 1000</code> signifique some (<code>0001</code>) 2 (<code>0010</code>) e 1 (<code>0001</code>) e \
+armazene o resultado na posição de memória 8 (<code>1000</code>). Na verdade, as instruções costumam ser muito mais complexas, \
+mas este exemplo ilustra seu funcionamento básico. São dependentes do hardware, que executa-as através de operações lógicas que \
+também não abordaremos neste curso. De mesmo modo, os caracteres (letras minúsculas, maiúsculas, acentuadas, ponto, vírgula, etc.) \
+são traduzidos através de tabelas, como a <a href="http://sticksandstones.kstrom.com/appen.html">ASCII</a>.</p>\
+<p>A moral da história é que, embora os computadores compreendam apenas 0s e 1s, raramente os programadores tem que trabalhar \
+com estes valores. Através de traduções sucessivas, é possível escrever em níveis cada vez mais altos, mais próximos da linguagem \
+humana, em linguagens mais expressivas. A palavra "expressiva" aqui significa "contendo mais significado em um menor número de caracteres, ser \
+capaz de fazer mais coisas escrevendo menos" (<a href="http://blog.revolutionanalytics.com/2012/11/which-programming-language-is-the-most-concise.html">\
+tabela comparativa entre expressividade de diferentes linguagens</a>). Uma boa forma de visualizar essas diferenças é ver o quanto \
+<a href="http://en.wikipedia.org/wiki/List_of_Hello_world_program_examples">pode variar o programa Hello World visto anteriormente</a>. \
+Estas "camadas" de tradução, que permitem o aumento na expressividade, são as principais responsáveis pelos grandes avanços na programação,</p>\
+  </tbody>\
+</table>\
+        '
+      },
+
+      {
+        title: "0.3 - Algoritmos",
+        prefill: '\
+function maior(lista) {\n\
+  var maior = lista[0];\n\
+  for (var i = 1; i < lista.length; i++) {\n\
+    if (lista[i] > maior) {\n\
+      maior = lista[i];\n\
+    }\n\
+  }\n\
+  return maior;\n\
+}\n\
+input = prompt("Digite uma lista de números inteiros separados por vírgula. Por exemplo: 15, 23, 94, 1, 32, -24");\n\
+numeros = input.split(",").map(function(numero) { return parseInt(numero); });\n\
+alert("O maior número da lista dada é: " + maior(numeros));\n\
+        ',
+        explanation: '\
+<p>Para finalizar esta seção introdutória, é relevante mencionar o conceito de algoritmos. Um algoritmo consiste de uma sequência <strong>ordenada</strong> \
+e <strong>finita</strong> de passos que solucionam um problema específico. É comum comparar algoritmos à uma receita de bolo, embora possam ser muito mais \
+complexos. Também é importante ressaltar a palavra <strong>finita</strong>, uma vez que um programa que execute indefinidamente não pode ser considerado um algoritmo \
+(embora sejam tão importantes quanto; um sistema operacional é um bom exemplo). Dentro de alguns capítulos, você irá experimentar algoritmos de vários níveis de \
+complexidade, com vários objetivos.</p>\
+<p>Para fins ilustrativos, segue abaixo um programa que utiliza um algoritmo simples para identificar o maior valor dentro de uma lista. Após alguns capítulos, você \
+irá compreender e escrever programas como este.</p>\
+        '
+      }
+    ]
+  },
+
+  {
     key: "valuesAndOperators",
     title: "1 - Valores e Operadores",
     exercises: [
@@ -160,7 +282,8 @@ Repare no espaço ao final da primeira string; caso não tivesse sido colocado, 
 <p>Valores do tipo <strong>boolean</strong>, ou <strong>booleanos</strong>, são valores lógicos que podem ser apenas um dos seguintes valores: \
 <code>true</code> e <code>false</code>. Embora simples, eles são fundamentais para a computação, desde o hardware até o software. \
 Sobre os valores booleanos, podem ser aplicados os <strong>operadores lógicos</strong>: <code>!</code> (not), <code>&&</code> (and) e <code>||</code> (or).</p>\
-<p>O operador <code>!</code> é unário (aplica-se sobre um único operando), e representa negação, e inverte o valor booleano. Segue abaixo uma tabela que representa essas transformações:</p>\
+<p>O operador <code>!</code> é unário (aplica-se sobre um único operando), e representa negação, ou seja, inverte o valor booleano. Segue abaixo uma tabela que\
+representa essas transformações:</p>\
 <table class="table table-striped">\
   <thead>\
     <tr>\
@@ -256,8 +379,10 @@ um valor ou <strong>recuperar</strong> seu valor.\
 <p>Para se atribuir ("guardar" um valor dentro da caixa), usa-se o <code>nomeDaVariavel = [expressão]</code> (sim, \
 apenas um <code>=</code>), na qual <code>[expressão]</code> é qualquer expressão que resulte num valor (caso tenha dúvidas do que é uma expressão, leia de novo o exercício \
 <a href="#valuesAndOperators_0">1.1 - Números</a>.</p>\
-<p>Para se acessar o valor de uma variável, basta chamar seu nome: <code>nomeDaVariavel</code>. O nome de uma variável precisa seguir algumas regras: deve ser iniciado por \
-uma letra ou caracter especial permitido (em JavaScript, são <code>_</code> e <code>$</code>), e depois zero ou mais letras, caracteres especiais permitidos e números \
+<p>Para se acessar o valor de uma variável, basta chamar seu nome (ou <strong>identificador</strong>): <code>nomeDaVariavel</code>. Chamar um identificador não existente \
+ocasiona um erro: <code>ReferenceError: teste is not defined</code>. O nome de uma variável precisa \
+seguir algumas regras: deve ser iniciado por uma letra ou caracter especial permitido (em JavaScript, são <code>_</code> e <code>$</code>), \
+e depois zero ou mais letras, caracteres especiais permitidos e números \
 (nada de espaço!). Por exemplo, alguns nomes de variáveis válidos são: <code>nomeDaVariavel</code>, <code>nome_da_variavel</code>, <code>_nome</code>, <code>$nome</code>, \
 <code>$_nome$1</code> (mas não faça isso pelamordedeus, vamos manter os nomes simples). Alguns nomes inválidos: <code>nome da variavel</code>, <code>1_nome</code>, \
 <code>nome!</code>.</p>\
@@ -268,7 +393,8 @@ dentro dela. Portanto, <code>x = 1; x = x + 1</code> resulta com <code>x == 2</c
 <p>Por fim, é uma boa prática fazer com que a inicialização (primeira atribuição) de uma variável utilize a palavra-chave <code>var</code>. \
 Por exemplo: <code>var nome = "Marcos"</code>. Após isto, as atribuições podem ocorrer de forma normal. Embora não seja obrigatório, é importante se acostumar com \
 essa boa prática por motivos que serão explicados no capítulo <a wip>Escopos</a>.</p>\
-<p>Execute o código abaixo. Para passar neste exercício, altere o código para que a variável <code>nome</code> <strong>termine</strong> a execução com o valor "Daniel".</p>\
+<p>Execute o código abaixo. Para passar neste exercício, altere o código para que a variável <code>nome</code> <strong>termine</strong> a execução com o valor "Daniel". \
+Também é interessante experimentar remover as linhas contendo atribuições e verificar o erro produzido pela chamada à um identificador inexistente.</p>\
         '
       },
 
@@ -336,7 +462,8 @@ seja explicitamente dito, por exemplo: <code>var a = null;</code>. Este valor se
         title: "1.8 - Operador + atribuição",
         prefill: '\
 var i = 10;\n\
-i = i + 1\n\
+i = i + 1;\n\
+i = i - 1;\n\
 i = i / 2;\n\
 i = i + 2;\n\
 i = i * 2;\n\
@@ -344,13 +471,66 @@ i = i % 2;\n\
 i = i - 1;\n\
 alert(i);\n\
         ',
+        answer: '\
+var i = 10;\n\
+i++;\n\
+i -= 2;\n\
+i /= 2;\n\
+i += 2;\n\
+i *= 2;\n\
+i %= 2;\n\
+i--;\n\
+alert(i);\n\
+        ',
         explanation: '\
 <p>A sequência <code>variavel = variavel [operador] outraVariavel</code> é extremamente comum em programação, tanto que foram criados atalhos: \
 <code>a += 1</code>, <code>a *= 2</code>, <code>a -= 1</code>, <code>a /= 2</code> e <code>a %= 2</code> são todos comandos válidos e equivalentes à sequência \
-mostrada, com os respectivos operadores. A expressão <code>saudacoes += " Daniel!"</code> também funciona como se esperaria. Além disso, para um dos casos mais \
-comuns de todos, o <strong>incremento</strong> e <strong>decremento</strong> podem ser reduzidos, respectivamente, à <code>variavel++</code> e <code>variavel--</code>.</p>\
+mostrada, com os respectivos operadores. A expressão <code>saudacoes += " Daniel!"</code> também funciona como se esperaria em relação à strings. \
+Além disso, para um dos casos mais comuns de todos, o <strong>incremento</strong> (adição de 1) e <strong>decremento</strong> (subtração de 1) podem \
+ser reduzidos, respectivamente, à <code>variavel++</code> e <code>variavel--</code>.</p>\
 <p>Isto conclui o assunto sobre variáveis e seus operadores. Ainda existem alguns operadores especiais, utilizados para operações com números binários, que não serão \
-abordados. No exemplo a seguir, conserte o código dado para utilizar as respectivas versões simplificadas.</p>\
+abordados por enquanto. No exemplo a seguir, conserte o código dado para utilizar as respectivas versões simplificadas.</p>\
+        '
+      },
+
+      {
+        title: "1.9 - Extra: Legibilidade",
+        hideCode: true,
+        explanation: '\
+<p>Este curso foi iniciado explicando o significado básico de programação. Este capítulo extra é o primeiro de uma série que aprofunda o sentido da palavra \
+programar, ampliando-o além do funcional, explicando as múltiplas responsabilidades e habilidades que um programador deve ter. Iniciaremos falando sobre \
+legibilidade.</p>\
+<p>Enquanto estiver escrevendo um código, você deve ter sempre em mente que não está escrevendo para si próprio, mas para outras pessoas. Isto é verdade \
+tanto se você trabalhar dentro de uma equipe quanto sozinho: seu "eu" do futuro vai agradecer profundamente quando tiver que mexer num código de 3 meses atrás. \
+Para isso, um passo básico é manter os nomes das variáveis o mais legível possíveis. Eles devem ser descritivos e claros sobre o tipo de valor contido e/ou função exercida \
+dentro do código. Ou seja, evite nomes de variáveis como <code>var x</code>, <code>var x2</code> e <code>var teste</code>, <strong>a não ser</strong> que sejam parte \
+do domínio do problema (x seria pertinente à um problema matemático, por exemplo) ou que você esteja fazendo uma <a wip>prototipagem</a> rápida, e não pretenda reutilizar \
+aquele código. Se estiver escrevendo um programa que armazene o nome de um usuário, use uma variável <code>var nome</code>, ou se houver outros tipos de nome dentro do \
+programa, use <code>var nomeUsuario</code> para evitar ambiguidades. Também é recomendado, embora nem sempre possível, utilizar nomes em inglês, tanto para ficar \
+em conformidade com o resto da linguagem de programação, quanto pela grande maioria dos programadores fazer o mesmo. Este curso não utiliza esta recomendação para \
+evitar uma possível barreira linguística ao aprendizado.</p>\
+<p>Existem dois estilos bem aceitos de se separar palavras dentro do nome de uma variável: camelCase e snake_case. No camelCase, como o próprio nome indica, palavras \
+são diferenciadas através de uma letra maiúscula no início de cada uma; no snake_case (ex: nomeDoUsuario), são separadas por <i>underscore</i> (ex: nome_do_usuario). \
+O estilo preferido por programadores JavaScript é o camelCase, e é aconselhável seguir os padrões da comunidade, tanto para facilitar sua compreensão ao ler exemplos \
+de outras pessoas quanto para manter seu código de mais fácil manutenção por outros.</p>\
+<p>Sobre o valor armazenado pela variável, embora a linguagem JavaScript permita que seu tipo seja mudado durante o decorrer do programa, isto não é aconselhável. \
+Uma vez inicializada com um tipo de valor, a variável deve não apenas ser utilizada apenas para o propósito explicitado por seu nome, mas também não deve mudar o tipo do \
+valor contido dentro dela. Por exemplo:</p>\
+<pre><code>\
+var numeroUsuarios = 0;\n\
+// Cálculando o número de usuários\n\
+numeroUsuarios = "O número total de usuários é: " + numeroUsuarios;\n\
+alert(numeroUsuarios);\n\
+</code></pre>\
+<p>O correto seria criar uma nova variável <code>mensagemNumeroUsuarios</code> ou passar a string diretamente para a função <code>alert</code>.</p>\
+<p>Por fim, sobre o ato de atribuir um valor à uma variável, repare que sempre utilizamos um ponto-e-vírgulo ao final da linha. Isto <strong>não</strong> é \
+obrigatório, mas é recomendado. Atribuir um valor à uma variável, assim como várias outras operações, é uma <strong>instrução</strong> (ou <strong>statement</strong>), \
+e o programa que executa o código JavaScript compreende que uma quebra de linha significa (em geral, <i class="troll" />) uma instrução diferente. Para se \
+utilizar mais de uma instrução em uma mesma linha, é possível utilizar o ponto-e-vírgula: <code>nome = "Marcos"; i = 0;</code>. A recomendação de se utilizar \
+sempre o ponto-e-vírgula deriva da função para a qual o JavaScript foi criado: uma linguagem para ser executada no browser de um usuário. Para isso, deve ser feito \
+o <i>download</i> do código, e quanto mais caracteres, maior o tamanho do arquivo a ser baixado. Portanto, é comum utilizar programas que removem quebras de linha, e \
+até modificam os nomes de variáveis e funções, de forma a compactar o código original até uma versão de funcionamento idêntico, porém com menos caracteres. Dessa \
+forma, é recomendado utilizar os pontos-e-vírgulas, uma vez que as quebras de linha serão removidas.</p>\
         '
       }
     ]
@@ -369,8 +549,8 @@ var notificar = function() {\n\
 \n\
 notificar();',
         explanation: '\
-<p>Assim como variáveis permitem reutilizar valores, funções permitem reutilizar <strong>statements</strong> (informalmente, comandos que fazem uma única coisa e \
-que são separados por <code>;</code>). Uma função é um conjunto de 1 ou mais statements que possui um nome, e pode ser executada em qualquer lugar ao chamar seu nome. \
+<p>Assim como variáveis permitem reutilizar valores, funções permitem reutilizar <strong>statements</strong> (ver <a href="#valuesAndOperators_8">1.9 - Extra: Legibilidade</a>). \
+Uma função é um conjunto de 1 ou mais statements que possui um nome, e pode ser executada em qualquer lugar ao chamar seu nome. \
 Declarar uma função significa associar este nome ao bloco de statements. Por exemplo (os parênteses e as chaves são necessários):</p>\
 <pre><code>\
 function notificar() {\n\
@@ -429,11 +609,11 @@ mesmo modo, não é necessário se preocupar caso uma função possua um parâme
       {
         title: "2.3 - Retorno",
         answer: '\
-function divisivel(a, b) {\n\
-  return a % b == 0;\n\
+function divisivel(dividendo, divisor) {\n\
+  return dividendo % divisor == 0;\n\
 }\
         ',
-        prefill: 'function divisivel(a, b) {\n}',
+        prefill: 'function divisivel(dividendo, divisor) {\n}',
         explanation: '\
 <p>Uma função pode possuir um valor de <strong>retorno</strong>, sendo especificado através do comando <code>return</code>. \
 Isto significa que, após ser chamada, ela <strong>retornará</strong> o valor especificado no mesmo local onde foi chamada. Por exemplo:</p>\
@@ -453,6 +633,147 @@ alert(mensagem);\n\
           { src: "divisivel(10, 2)", expected: true },
           { src: "divisivel(10, 3)", expected: false }
         ]
+      },
+
+      {
+        title: "2.4 - Extra: Refatoração e DRY",
+        prefill: '\
+function funcionario(registro) {\n\
+  return registro.split("-")[0].trim() == "FUNCIONÁRIO"\n\
+}\n\
+\n\
+function gerente(registro) {\n\
+  return registro.split("-")[0].trim() == "GERENTE"\n\
+}\n\
+\n\
+function supervisor(registro) {\n\
+  return registro.split("-")[0].trim() == "SUPERVISOR"\n\
+}\n\
+\n\
+function salario(registro) {\n\
+  if (funcionario(registro)) {\n\
+    return 2000;\n\
+  } else if (gerente(registro)) {\n\
+    return 3000;\n\
+  } else if (supervisor(registro)) {\n\
+    return 4000;\n\
+  } else {\n\
+    alert("Tipo não encontrado: " + registro.split("-")[0].trim());\n\
+  }\n\
+}\n\
+\n\
+function descrever(registro) {\n\
+  var nome = registro.split("-")[1].trim();\n\
+  alert("O salário do empregado " + nome + " é " + salario(registro));\n\
+}\n\
+\n\
+descrever("FUNCIONÁRIO - Daniel Rodrigues");\n\
+        ',
+        answer: '\
+function separar(registro) {\n\
+  return registro.split("-");\n\
+}\n\
+\n\
+function campo(registro, indice) {\n\
+  return separar(registro)[indice].trim();\n\
+}\n\
+\n\
+function cargo(registro) {\n\
+  return campo(registro, 0);\n\
+}\n\
+\n\
+function nome(registro) {\n\
+  return campo(registro, 1);\n\
+}\n\
+\n\
+function funcionario(registro) {\n\
+  return cargo(registro) == "FUNCIONÁRIO"\n\
+}\n\
+\n\
+function gerente(registro) {\n\
+  return cargo(registro) == "GERENTE"\n\
+}\n\
+\n\
+function supervisor(registro) {\n\
+  return cargo(registro) == "SUPERVISOR"\n\
+}\n\
+\n\
+function salario(registro) {\n\
+  if (funcionario(registro)) {\n\
+    return 2000;\n\
+  } else if (gerente(registro)) {\n\
+    return 3000;\n\
+  } else if (supervisor(registro)) {\n\
+    return 4000;\n\
+  } else {\n\
+    alert("Tipo não encontrado: " + cargo(registro)));\n\
+  }\n\
+}\n\
+\n\
+function descrever(registro) {\n\
+  alert("O salário do empregado " + nome(registro) + " é " + salario(registro));\n\
+}\n\
+\n\
+descrever("FUNCIONÁRIO - Daniel Rodrigues");\n\
+        ',
+        explanation: '\
+<p>Uma das tarefas mais importantes que um programador deve realizar é a refatoração. Este é um jargão derivado da palavra em inglês <i>refactoring</i>, e é uma \
+técnica para melhorar o projeto (ou <i>design</i>) de um código. Consiste de realizar uma série de pequenas mudanças que <strong>não</strong> alteram o funcionamento \
+do programa, mas cujo efeito cumulativo resultam num programa muito mais manutenível e legível. Por exemplo, digamos que precisemos de duas funções, uma chamada \
+<code>par</code> e outra <code>impar</code>, que retornam um valor booleano respondendo se um argumento passado é par ou ímpar, respectivamente. Uma solução \
+inocente seria:</p>\
+<pre><code>\
+function par(x) {\n\
+  return x % 2 == 0;\n\
+}\n\
+\n\
+function impar(x) {\n\
+  return x % 2 != 0;\n\
+}\n\
+</code></pre>\
+<p>Porém, observando o código das duas funções, percebemos que é praticamente idêntico. De fato, implementamos no exercício anterior a função <code>divisivel</code>, \
+que pode ser utilizado para se reduzir a repetição do exemplo acima:</p>\
+<pre><code>\
+function divisivel(dividendo, divisor) {\n\
+  return dividendo % divisor == 0;\n\
+}\n\
+\n\
+function par(x) {\n\
+  return divisivel(x, 2);\n\
+}\n\
+\n\
+function impar(x) {\n\
+  return !divisivel(x, 2);\n\
+}\n\
+</code></pre>\
+<p>Mais que isso, podemos ver que a função <code>impar</code> é o exato oposto da <code>par</code>, ou seja, quando <code>par(x)</code> for <code>true</code>, \
+<code>impar(x)</code> será <code>false</code>, sem excessões. Sendo assim, podemos reescrevê-la como:</p>\
+<pre><code>\
+function impar(x) {\n\
+  return !par(x);\n\
+}\n\
+</code></pre>\
+<p>Repare que fizemos duas pequenas modificações, e nenhuma delas alterou o comportamento do código: <code>par(x)</code> mantém o mesmo resultado para qualquer \
+<code>x</code> antes e depois da refatoração. São códigos <strong>equivalentes</strong>, mas o segundo denota muito mais claramente seu funcionamento: um número é \
+par se for divisível por 2, e é ímpar se não for par.</p>\
+<p>Além da melhoria na legibilidade, o exemplo acima demonstra o princípio DRY &ndash; <i>Don\'t Repeat Yourself</i> (Não Se Repita) &ndash; que busca reduzir \
+a repetição de código dentro de um sistema. O princípio pode ser dito como: "Todo pedaço de conhecimento deve ter uma única, não-ambígua, autoritativa representação \
+dentro de um sistema". Dentro de nosso exemplo, temos uma única representação para o conhecimento de se um número é divisível por outro &ndash; a \
+função <code>divisivel</code> &ndash;, e uma única representação para o conhecimento de se um número é par &ndash; a função <code>par</code>. \
+A maior vantagem desta prática é evitar inconsistências dentro do código. Embora a definição matemática de número par dificilmente será mudada, \
+muitos pedaços de software são frequentemente alterados. Por exemplo, em um jogo, \
+um jogador pode ser considerado vitorioso caso tenha mais pontos ao final da partida. Após algum tempo, as regras podem mudar: ele apenas será vitorioso se tiver mais \
+pontos E tiver obtido alguns itens essenciais ao longo da partida. Imagine se tivéssemos que alterar essa regra em diversos locais diferentes? É muito mais fácil \
+caso tenhamos uma função <code>checarVitoria</code>, utilizada ao longo do código.</p>\
+<p>No exercício abaixo, foi escrita uma função que recebe um registro de empregado (provavelmente de algum arquivo ou banco de dados), e diz qual seu salário baseado \
+em seu cargo. A função <code>split(separador)</code> utilizada é "pertencente" às strings (mais sobre funções que pertencem à valores em <a wip>Objetos e Propriedades</a>), e \
+separa a string em uma lista de valores (ver <a wip>Listas</a>) nos locais em que for encontrada a string passada como argumento, nesse caso <code>"-"</code>. \
+A função <code>trim()</code>, também pertencente às strings, remove os espaços em branco à esquerda e à direita da string, ou seja, "  uma string qualquer " vira \
+"uma string qualquer". Portanto, <code>"FUNCIONÁRIO - Daniel Rodrigues".split("-")[0]</code> resulta na string <code>"FUNCIONÁRIO"</code>, e \
+<code>"FUNCIONÁRIO - Daniel Rodrigues".split("-")[1].trim()</code> resulta em <code>"Daniel Rodrigues"</code>. Pede-se que refatore o código, \
+eliminando a repetição e tornando-o mais legível. Embora neste exercício sejam utilizados muitos conhecimentos \
+ainda não ensinados, o foco deve ser na remoção da repetição; o aluno deve considerar que o código é válido, ainda que não compreenda completamente seu funcionamento.</p>\
+        '
       }
     ]
   },
@@ -624,7 +945,15 @@ function fibonacci(x) {\n\
 }\n\
         ',
         testCases: [
+          { src: "fibonacci(0);", expected: 0 },
+          { src: "fibonacci(1);", expected: 1 },
           { src: "fibonacci(2);", expected: 1 },
+          { src: "fibonacci(3);", expected: 2 },
+          { src: "fibonacci(4);", expected: 3 },
+          { src: "fibonacci(5);", expected: 5 },
+          { src: "fibonacci(6);", expected: 8 },
+          { src: "fibonacci(7);", expected: 13 },
+          { src: "fibonacci(8);", expected: 21 },
           { src: "fibonacci(10);", expected: 55 },
           { src: "fibonacci(20);", expected: 6765 }
         ],
@@ -653,12 +982,24 @@ function fatorial(x) {\n\
 \n\
 fatorial(5);\n\
 </code></pre>\
-<p>Preencha a função <code>fibonacci</code> abaixo com o código que retorna o número na posição informada da \
+<p>Preencha a função <code>fibonacci</code> abaixo com o algoritmo que retorna o número na posição informada da \
 <a target="_blank" href="http://pt.wikipedia.org/wiki/Sequ%C3%AAncia_de_Fibonacci">Sequência de Fibonacci</a>. Esta sequência é iniciada com 0 e 1, \
 e o resto dos números é gerado somando-se os dois números anteriores na sequência <strong>infinitamente</strong>. Por exemplo: \
 <code>0, 1, (1 + 0 == 1), (1 + 1 == 2), (2 + 1 == 3), (3 + 2 == 5), (5 + 3 == 8), (8 + 5 == 13), (13 + 8 == 21), ...</code>. \
 Como não é plausível gerar uma sequência infinita de números, pedimos que gere apenas o \
-número na posição passada como parâmetro. Para facilitar, os casos finais da recursão já estão preenchidos; falta apenas a redução.</p>\
+número na posição passada como parâmetro. Por exemplo:</p>\
+<pre><code>\
+fibonacci(0) == 0;\n\
+fibonacci(1) == 1;\n\
+fibonacci(2) == 1;\n\
+fibonacci(3) == 2;\n\
+fibonacci(4) == 3;\n\
+fibonacci(5) == 5;\n\
+fibonacci(6) == 8;\n\
+fibonacci(7) == 13;\n\
+fibonacci(8) == 21;\n\
+</code></pre>\
+<p>Para facilitar, os casos finais da recursão já estão preenchidos; falta apenas a redução.</p>\
         '
       },
 
