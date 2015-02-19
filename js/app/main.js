@@ -104,7 +104,9 @@ app.controller("ExerciseCtrl", function($scope) {
       }
       $scope.result = output + result;
     } catch(e) {
-      $scope.result = e.toString();
+      var lastLine = e.stack.split("\n")[1];
+      var lineColumn = /<anonymous>:(\d+:\d+)\)$/.exec(lastLine)[1].split(":");
+      $scope.result = e.toString() + "; linha: " + lineColumn[0] + ", coluna: " + lineColumn[1];
       $scope.resultClass = "failure";
     }
   };
@@ -661,7 +663,7 @@ function salario(registro) {\n\
   } else if (supervisor(registro)) {\n\
     return 4000;\n\
   } else {\n\
-    alert("Tipo não encontrado: " + registro.split("-")[0].trim());\n\
+    alert("Cargo não encontrado: " + registro.split("-")[0].trim());\n\
   }\n\
 }\n\
 \n\
@@ -709,7 +711,7 @@ function salario(registro) {\n\
   } else if (supervisor(registro)) {\n\
     return 4000;\n\
   } else {\n\
-    alert("Tipo não encontrado: " + cargo(registro)));\n\
+    alert("Cargo não encontrado: " + cargo(registro)));\n\
   }\n\
 }\n\
 \n\
@@ -1133,7 +1135,10 @@ elegância da recursividade, em que se aborda casos simples e a redução até o
 através de alguma estrutura de controle. É encorajado que, quando se deparar com algum problema difícil, busque-se uma solução recursiva, em geral mais \
 simples de se obter, para depois convertê-la para o método iterativo uma vez que se prove correta.</p>\
 <p>Neste exercício, você deverá transformar a função <code>fibonacci</code>, vista no exercício passado, para o método iterativo. Fica a lembrança: será necessário \
-armazenar o contexto atual e atualizá-lo através de alguma estrutura de controle, ao invés de simplesmente realizar a redução à casos mais simples da recursão.</p>\
+armazenar o contexto atual e atualizá-lo através de alguma estrutura de controle, ao invés de simplesmente realizar a redução à casos mais simples da recursão. \
+Fique atento também para evitar loops infinitos, pois ao contrário da recursão infinita, não será lançado um erro e o programa executará indefinidamente. \
+Alguns browsers identificam que o programa está "travado" e "matam" a página, mas não é uma garantia. Não esqueça de atualizar as variáveis de controle \
+e fazer as verificações corretas para que ocorra a interrupção do loop!</p>\
         '
       },
 
@@ -1167,7 +1172,250 @@ Esta, conhecida como <i>Test-driven development</i> (TDD), é extremamente útil
     title: "4 - Estruturas de Dados Simples",
     exercises: [
       {
-        title: "4.1 - Listas",
+        title: "4.1 - Objetos e Propriedades",
+        prefill: '\
+function funcionario(empregado) {\n\
+}\n\
+\n\
+function gerente(empregado) {\n\
+}\n\
+\n\
+function supervisor(empregado) {\n\
+}\n\
+\n\
+function salario(empregado) {\n\
+  if (funcionario(empregado)) {\n\
+    return 2000;\n\
+  } else if (gerente(empregado)) {\n\
+    return 3000;\n\
+  } else if (supervisor(empregado)) {\n\
+    return 4000;\n\
+  } else {\n\
+    alert("Cargo não encontrado: " + empregado.cargo);\n\
+  }\n\
+}\n\
+\n\
+function descrever(empregado) {\n\
+  empregado.salario = salario(empregado);\n\
+  alert("O salário do empregado " + empregado.nome + " é " + empregado.salario);\n\
+}\n\
+\n\
+descrever({ nome: "Marcos Rodrigues", cargo: "FUNCIONÁRIO", salario: 0 });\n\
+        ',
+        answer: '\
+function funcionario(empregado) {\n\
+  return empregado.cargo == "FUNCIONÁRIO";\n\
+}\n\
+\n\
+function gerente(empregado) {\n\
+  return empregado.cargo == "GERENTE";\n\
+}\n\
+\n\
+function supervisor(empregado) {\n\
+  return empregado.cargo == "SUPERVISOR";\n\
+}\n\
+\n\
+function salario(empregado) {\n\
+  if (funcionario(empregado)) {\n\
+    return 2000;\n\
+  } else if (gerente(empregado)) {\n\
+    return 3000;\n\
+  } else if (supervisor(empregado)) {\n\
+    return 4000;\n\
+  } else {\n\
+    alert("Cargo não encontrado: " + empregado.cargo);\n\
+  }\n\
+}\n\
+\n\
+function descrever(empregado) {\n\
+  empregado.salario = salario(empregado);\n\
+  alert("O salário do empregado " + empregado.nome + " é " + empregado.salario);\n\
+}\n\
+\n\
+descrever({ nome: "Marcos Rodrigues", cargo: "FUNCIONÁRIO", salario: 0 });\n\
+        ',
+        explanation: '\
+<p>Você já deve ter percebido que dados algumas vezes são relacionados. Por exemplo, no exercício <a href="functions_3">2.4 - Extra: Refatoração e DRY</a>, \
+os dados de um empregado foram armazenados em uma string, separados pelo delimitador <code>"-"</code>, e processados para se obter seu salário. Podemos \
+considerar que um conjunto de dados ordenados e referentes à uma mesma entidade consiste num <strong>registro</strong>, ou <strong>tupla</strong>. \
+Existe uma forma mais prática e flexível de se representar um registro dentro do código: um valor especial (assim como as funções) chamado <strong>objeto</strong>. \
+Um objeto nada mais é do que uma estrutura que mapeia identificadores à valores. Isso soa familiar, não? Uma variável faz exatamente o mesmo! O que um objeto faz é agregar \
+variáveis especiais, chamadas <strong>propriedades</strong>, dentro de um mesmo contexto. Veja este exemplo:</p>\
+<pre><code>\
+var primeiroEmpregado = { nome: "Daniel Rodrigues", cargo: "Funcionário" };\n\
+var segundoEmpregado = { nome: "Marcos Rodrigues", cargo: "Gerente" };\n\
+\n\
+function descrever(empregado) {\n\
+  alert("O cargo do empregado " + empregado.nome + " é " + empregado.cargo);\n\
+}\n\
+\n\
+descrever(primeiroEmpregado);\n\
+descrever(segundoEmpregado);\n\
+</code></pre>\
+<p>Repare que um objeto é delimitado por chaves, da mesma forma que um <code>if</code>, <code>while</code> ou função, mas não contém um bloco de código. \
+Além da melhoria na legibilidade, percebemos imediatamente outra enorme vantagem: as propriedades de um objeto não sobrescrevem as de outro. Normalmente, \
+não poderíamos ter duas variáveis <code>nome</code> dentro de um mesmo código; precisaríamos criar <code>nomeDoPrimeiroEmpregado</code> e \
+<code>nomeDoSegundoEmpregado</code>. Mas, como <code>nome</code> pertence à um objeto, não há esse problema!</p>\
+<p>Digamos agora que um dos empregados recebeu uma promoção. Para se atualizar o valor de uma propriedade, basta realizar uma atribuição, como numa variável: \
+<code>primeiroEmpregado.cargo = "Gerente";</code>. O <code>.</code> basicamente significa "dentro desse objeto".</p>\
+<p>Uma propriedade pode conter qualquer tipo de valor, inclusive outros objetos:</p>\
+<pre><code>\
+primeiroEmpregado.endereco = { cidade: "Rio de Janeiro", estado: "RJ", pais: "Brasil" };\n\
+\n\
+function descreverEndereco(empregado) {\n\
+  alert("O empregado " + empregado.nome + " mora em " + empregado.endereco.cidade + " - " + empregado.endereco.estado + ", " + empregado.endereco.pais);\n\
+}\n\
+descreverEndereco(primeiroEmpregado);\n\
+</code></pre>\
+<p>No exemplo acima também vimos uma característica importante do JavaScript: os objetos são abertos. Isso quer dizer que, após um objeto ser criado, novas \
+propriedades podem ser inseridas livremente nele. Muitas linguagens não permitem isso, ou ao menos não de forma tão simples: um objeto deve obedecer à uma \
+<strong>interface</strong>, ou <strong>contrato</strong>, bem definida, e não pode ser alterado depois de ser criado. Existe um bom motivo para isso. Se você chamar \
+<code>descreverEndereco(segundoEmpregado);</code>, obterá um erro <code>TypeError: Cannot read property \'cidade\' of undefined</code>. Isto ocorre pois \
+não foi definido um endereço para o <code>segundoEmpregado</code>. Dessa forma, quando for utilizar objetos, evite alterar sua interface. Porém, existem alguns \
+casos em que isto é adequado, possibilitando algumas técnicas avançadas de programação.</p>\
+<p>No exercício abaixo, preencha as funções adequadas para identificar o cargo do empregado:</p>\
+        '
+      },
+
+      {
+        title: "4.2 - Métodos",
+        prefill: '\
+var empregado = {\n\
+  cargo: "FUNCIONÁRIO",\n\
+\n\
+  funcionario: function() {\n\
+    return this.cargo == "FUNCIONÁRIO";\n\
+  },\n\
+\n\
+  gerente: function() {\n\
+    return this.cargo == "GERENTE";\n\
+  },\n\
+\n\
+  supervisor: function() {\n\
+    return this.cargo == "SUPERVISOR";\n\
+  },\n\
+\n\
+  promover: function() {\n\
+  }\n\
+}\n\
+        ',
+        answer: '\
+var empregado = {\n\
+  cargo: "FUNCIONÁRIO",\n\
+\n\
+  funcionario: function() {\n\
+    return this.cargo == "FUNCIONÁRIO";\n\
+  },\n\
+\n\
+  gerente: function() {\n\
+    return this.cargo == "GERENTE";\n\
+  },\n\
+\n\
+  supervisor: function() {\n\
+    return this.cargo == "SUPERVISOR";\n\
+  },\n\
+\n\
+  promover: function() {\n\
+    if (this.funcionario()) {\n\
+      this.cargo = "GERENTE";\n\
+    } else if (this.gerente()) {\n\
+      this.cargo = "SUPERVISOR";\n\
+    }\n\
+  }\n\
+}\n\
+        ',
+        testCases: [
+          { src: "empregado.cargo = 'FUNCIONÁRIO'; empregado.promover(); empregado.cargo;", expected: "GERENTE" },
+          { src: "empregado.cargo = 'GERENTE'; empregado.promover(); empregado.cargo;", expected: "SUPERVISOR" },
+          { src: "empregado.cargo = 'SUPERVISOR'; empregado.promover(); empregado.cargo;", expected: "SUPERVISOR" }
+        ],
+        explanation: '\
+<p>Talvez você tenha imaginado que, se uma propriedade de um objeto pode conter qualquer valor, talvez ela possa conter uma função também. \
+De fato, isto não apenas é possível como é a base de uma das técnicas de desenvolvimento de software mais utilizadas atualmente: a <strong>\
+Programação Orientada à Objetos</strong>. Existem muitas facetas desta técnica, e muitas formas diferentes que cada linguagem implementa \
+suas características, mas o conceito mais importante é agrupar num "pacote" coeso dados e funções que processam esses dados. Essas funções \
+pertencentes à um objeto são chamadas de métodos. Por exemplo, no exercício anterior, ao invés de chamar <code>salario(empregado)</code>, poderíamos chamar:</p>\
+<pre><code>\
+empregado.salario = function(empregado) {\n\
+  if (funcionario(empregado)) {\n\
+    return 2000;\n\
+  } else if (gerente(empregado)) {\n\
+    return 3000;\n\
+  } else if (supervisor(empregado)) {\n\
+    return 4000;\n\
+  } else {\n\
+    alert("Cargo não encontrado: " + empregado.cargo);\n\
+  }\n\
+}\n\
+\n\
+alert(empregado.salario(empregado));\n\
+</code></pre>\
+<p>Embora o código acima seja válido, existe uma forma equivalente e mais prática de se acessar as propriedades de um objeto: a variável <code>this</code>:</p>\
+<pre><code>\
+empregado.salario = function() {\n\
+  if (funcionario(this)) {\n\
+    return 2000;\n\
+  } else if (gerente(this)) {\n\
+    return 3000;\n\
+  } else if (supervisor(this)) {\n\
+    return 4000;\n\
+  } else {\n\
+    alert("Cargo não encontrado: " + this.cargo);\n\
+  }\n\
+}\n\
+\n\
+alert(empregado.salario());\n\
+</code></pre>\
+<p>Como você pode ver, a variável <code>this</code> funciona como se você recebesse o próprio objeto como parâmetro dentro da função. De fato, nós \
+podemos refatorar o código acima ainda mais:</p>\
+<pre><code>\
+empregado.funcionario = function() {\n\
+  return this.cargo == "FUNCIONÁRIO";\n\
+}\n\
+\n\
+empregado.gerente = function() {\n\
+  return this.cargo == "GERENTE";\n\
+}\n\
+\n\
+empregado.supervisor = function() {\n\
+  return this.cargo == "SUPERVISOR";\n\
+}\n\
+\n\
+empregado.salario = function() {\n\
+  if (this.funcionario()) {\n\
+    return 2000;\n\
+  } else if (this.gerente()) {\n\
+    return 3000;\n\
+  } else if (this.supervisor()) {\n\
+    return 4000;\n\
+  } else {\n\
+    alert("Cargo não encontrado: " + this.cargo);\n\
+  }\n\
+}\n\
+\n\
+alert(empregado.salario());\n\
+</code></pre>\
+<p>Como você pode ver, os dados e os métodos são relacionados. Não faria sentido colocar dentro do objeto <code>empregado</code> um método\
+<code>empregado.precoDoProduto(produto)</code>, por exemplo. Definir quais informações e funções devem estar dentro de um objeto, garantindo \
+alta <strong>coesão</strong>, é uma preocupação constante na vida de um bom programador. Idealmente, um objeto deve lidar com \
+<a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">apenas uma responsabilidade</a>. Isto permite não apenas mais fácil \
+compreensão do papel daquele objeto dentro do sistema, mas também facilita reutilizá-lo em outros contextos, uma vez que ele possui \
+comportamentos bem específicos e pouco <a href="http://en.wikipedia.org/wiki/Coupling_%28computer_programming%29"><strong>acoplados</strong></a>. \
+Por exemplo, um objeto <code>projetil</code> poderia ser utilizado dentro de um jogo tanto para representar uma bala de revólver, uma bola de canhão \
+ou um míssil.</p>\
+<p>Algo importante a se ter em mente é que, em JavaScript, <strong>tudo</strong> é um objeto. Uma string <code>var empregado = "GERENTE - Marcos";</code> \
+por exemplo, possui a propriedade <code>empregado.length == 16</code>, que armazena a quantidade de caracteres do texto. De mesma forma, \
+strings possuem métodos: <code>empregado.replace("GERENTE", "SUPERVISOR") == "SUPERVISOR - Marcos"</code>. E isso vale para todos os tipos de valores: \
+números (<code>1.2345.toPrecision(3) == 1.23</code>), booleans (<code>true.toString() == "true"</code>) e até funções \
+(<code>(function funcao() {}).name == "funcao"</code>)! Isso mesmo, funções podem conter propriedades e até outras funções!</p>\
+<p>No exercício abaixo, você deverá escrever o método <code>promover</code> que verifica o cargo atual do empregado e o atualiza para a posição superior, \
+caso haja. Isso quer dizer que um funcionário, após ser promovido, será um gerente, e que um gerente, após promovido, vira um supervisor, mas um supervisor \
+não pode mais ser promovido.</p>\
+        '
+      },
+
+      {
+        title: "4.3 - Listas",
         prefill: '\
 function divisivel(dividendo, divisor) {\n\
   return dividendo % divisor == 0;\n\
