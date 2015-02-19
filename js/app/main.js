@@ -523,6 +523,8 @@ numeroUsuarios = "O número total de usuários é: " + numeroUsuarios;\n\
 alert(numeroUsuarios);\n\
 </code></pre>\
 <p>O correto seria criar uma nova variável <code>mensagemNumeroUsuarios</code> ou passar a string diretamente para a função <code>alert</code>.</p>\
+<p>Sobre o tamanho e especificidade dos identificadores, há duas principais filosofias: descrever o mais especificamente possível, por exemplo <code>\
+nomeDigitadoDoUsuario</code>, e o menos possível dentro do contexto, por exemplo, caso não haja outro nome dentro do programa senão o do usuário, apenas <code>nome</code>.</p>\
 <p>Por fim, sobre o ato de atribuir um valor à uma variável, repare que sempre utilizamos um ponto-e-vírgulo ao final da linha. Isto <strong>não</strong> é \
 obrigatório, mas é recomendado. Atribuir um valor à uma variável, assim como várias outras operações, é uma <strong>instrução</strong> (ou <strong>statement</strong>), \
 e o programa que executa o código JavaScript compreende que uma quebra de linha significa (em geral, <i class="troll" />) uma instrução diferente. Para se \
@@ -550,7 +552,7 @@ var notificar = function() {\n\
 notificar();',
         explanation: '\
 <p>Assim como variáveis permitem reutilizar valores, funções permitem reutilizar <strong>statements</strong> (ver <a href="#valuesAndOperators_8">1.9 - Extra: Legibilidade</a>). \
-Uma função é um conjunto de 1 ou mais statements que possui um nome, e pode ser executada em qualquer lugar ao chamar seu nome. \
+Uma função é um conjunto de 1 ou mais statements que possui um nome (ou identificador), e pode ser executada em qualquer lugar ao chamá-lo. \
 Declarar uma função significa associar este nome ao bloco de statements. Por exemplo (os parênteses e as chaves são necessários):</p>\
 <pre><code>\
 function notificar() {\n\
@@ -569,9 +571,10 @@ var notificar = function () {\n\
 </code></pre>\
 <p>Dessa forma, é possível perceber que funções não passam de um tipo especial de valor, e assim como outros valores podem ser armazenadas em variáveis e passadas \
 como argumentos para outras funções. Nem todas as linguagens de programação permitem isso, mas vamos esquecer desse detalhe por enquanto. Estamos usando JavaScript, \
-uma das linguagens mais versáteis existentes! Agora que temos uma função declarada, como fazemos para executar o código dela? Basta chamar seu nome seguido de \
-parênteses: <code>notificar()</code>. Assim como variáveis, o chamar o nome de uma função é como tirar ela de dentro da caixa. Os parênteses funcionam como uma ordem: \
-pegue isso que eu acabei de tirar da caixa e execute.</p>\
+uma das linguagens mais versáteis existentes! De mesma forma, as recomendações de legibilidade e nomenclatura para identificadores de variáveis são aplicáveis à funções. \
+Agora que temos uma função declarada, como fazemos para executar o código dela? Basta chamar seu nome seguido de \
+parênteses: <code>notificar()</code>. Assim como variáveis, chamar o nome de uma função é como tirar ela de dentro da caixa. Os parênteses funcionam como uma ordem: \
+pegue isso que eu acabei de tirar da caixa e execute-o.</p>\
 <p>Execute o código abaixo e veja seu resultado. Experimente remover os parênteses da chamada de função e repare no resultado. O que você entende por isso?</p>\
         '
       },
@@ -1122,12 +1125,36 @@ function fatorial(x) {\n\
 </code></pre>\
 <p>Este formato, com a inicialização de uma <code>variável de controle do loop</code>, com o incremento/decremento da mesma sendo executado ao final do \
 bloco de código até que um limite bem definido o faça encerrar a repetição, é tão comum que, como em geral acontece na programação, foi criado um atalho \
-para ele, o qual será explicado em <a wip>Repetição definida: for</a>. O que podemos perceber nas soluções apresentadas é que perde-se a \
+para ele, o qual será explicado em <a wip>Repetição definida: for</a>. Também vale ressaltar que a variável <code>i</code> foge às recomendações sobre \
+identificadores descritivos. Este é um caso especial, pois <code>i</code> é comumente utilizada como variável contendo o <strong>índice</strong> atual \
+em uma iteração; é uma convenção. É um caso análogo às variáveis convencionadas da física, como <code>m</code> para massa e <code>F</code> para força. \
+O que podemos perceber nas soluções apresentadas é que perde-se a \
 elegância da recursividade, em que se aborda casos simples e a redução até os mesmos através da mudança de contexto, e passa-se a controlar a execução \
 através de alguma estrutura de controle. É encorajado que, quando se deparar com algum problema difícil, busque-se uma solução recursiva, em geral mais \
 simples de se obter, para depois convertê-la para o método iterativo uma vez que se prove correta.</p>\
 <p>Neste exercício, você deverá transformar a função <code>fibonacci</code>, vista no exercício passado, para o método iterativo. Fica a lembrança: será necessário \
 armazenar o contexto atual e atualizá-lo através de alguma estrutura de controle, ao invés de simplesmente realizar a redução à casos mais simples da recursão.</p>\
+        '
+      },
+
+      {
+        title: "3.6 - Extra: Corretude",
+        hideCode: true,
+        explanation: '\
+<p>Um programador às vezes precisa escrever códigos consideravelmente complexos, principalmente algoritmos, os quais são de difícil compreensão, ainda que sejam \
+aplicadas todas as boas práticas e recomendações. O exercício anterior é um bom exemplo; não importa o quão experiente seja o programador, caso ele se depare com \
+um código daquele nível de complexidade, precisará realizar uma execução mental do código, passo-a-passo, sobre diferentes valores.</p>\
+<p>Executar sempre seu código mentalmente é uma prática essencial para garantir sua corretude, uma vez que programar é uma atividade com <strong>intento</strong>. \
+Escrever ou copiar linhas semi-aleatórias de código até obter o resultado desejado é <a href="https://pragprog.com/the-pragmatic-programmer/extracts/coincidence">\
+Programar por Coincidência</a>. Dificilmente o programa resultante será o mais correto, conciso e legível possível. Além de ser útil ao escrever o algoritmo, \
+é um exercício que facilita bastante a <strong>depuração</strong>, ou <strong>debugging</strong>.</p>\
+<p>Algo que deve ser levado em consideração são <strong>quais argumentos testar</strong>, uma vez que não é prático nem útil testar indefinidos valores de entrada. \
+Também não é aconselhável executar todas as iterações de um valor de entrada grande (por exemplo, <code>fibonacci(100);</code>). É útil \
+considerar a mesma técnica usada em algoritmos recursivos: identificar os casos finais, ou de borda (<i>edge cases</i>), e o caso comum. Isto significa executar \
+o código para os valores que estejam inclusos dentro das condições de término do algoritmo, e pelo menos uma vez para o caso recursivo.</p>\
+<p>Esta é apenas uma de várias técnicas para garantir a corretude do código. Esta poderia ser chamada de <strong>Verificação por Inspeção</strong>. Existem \
+outras técnicas, como <strong>Testes Automatizados</strong>, inclusive algumas que misturam teste e design, por exemplo ao escrever o teste antes do código. \
+Esta, conhecida como <i>Test-driven development</i> (TDD), é extremamente útil e será vista em mais detalhes no capítulo sobre <a wip>Testes</a>.</p>\
         '
       }
     ]
