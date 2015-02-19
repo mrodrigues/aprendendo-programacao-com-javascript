@@ -1144,17 +1144,236 @@ armazenar o contexto atual e atualizá-lo através de alguma estrutura de contro
 <p>Um programador às vezes precisa escrever códigos consideravelmente complexos, principalmente algoritmos, os quais são de difícil compreensão, ainda que sejam \
 aplicadas todas as boas práticas e recomendações. O exercício anterior é um bom exemplo; não importa o quão experiente seja o programador, caso ele se depare com \
 um código daquele nível de complexidade, precisará realizar uma execução mental do código, passo-a-passo, sobre diferentes valores.</p>\
-<p>Executar sempre seu código mentalmente é uma prática essencial para garantir sua corretude, uma vez que programar é uma atividade com <strong>intento</strong>. \
+<p>Executar sempre seu código mentalmente, possivelmente escrevendo em um papel os resultados de cada passo, é uma prática essencial para garantir sua corretude, \
+uma vez que programar é uma atividade com <strong>intento</strong>. \
 Escrever ou copiar linhas semi-aleatórias de código até obter o resultado desejado é <a href="https://pragprog.com/the-pragmatic-programmer/extracts/coincidence">\
 Programar por Coincidência</a>. Dificilmente o programa resultante será o mais correto, conciso e legível possível. Além de ser útil ao escrever o algoritmo, \
 é um exercício que facilita bastante a <strong>depuração</strong>, ou <strong>debugging</strong>.</p>\
 <p>Algo que deve ser levado em consideração são <strong>quais argumentos testar</strong>, uma vez que não é prático nem útil testar indefinidos valores de entrada. \
 Também não é aconselhável executar todas as iterações de um valor de entrada grande (por exemplo, <code>fibonacci(100);</code>). É útil \
 considerar a mesma técnica usada em algoritmos recursivos: identificar os casos finais, ou de borda (<i>edge cases</i>), e o caso comum. Isto significa executar \
-o código para os valores que estejam inclusos dentro das condições de término do algoritmo, e pelo menos uma vez para o caso recursivo.</p>\
-<p>Esta é apenas uma de várias técnicas para garantir a corretude do código. Esta poderia ser chamada de <strong>Verificação por Inspeção</strong>. Existem \
-outras técnicas, como <strong>Testes Automatizados</strong>, inclusive algumas que misturam teste e design, por exemplo ao escrever o teste antes do código. \
+o código para os valores que estejam inclusos dentro das condições de término do algoritmo, e pelo menos uma vez para o caso recursivo, garantindo que este \
+decai para os casos de borda eventualmente e corretamente.</p>\
+<p>Esta é apenas uma de várias técnicas para garantir a corretude do código. Poderia ser chamada de <strong>Verificação por Inspeção</strong>. Existem \
+outras técnicas, como <strong>Testes Automatizados</strong>, inclusive algumas que misturam teste e design, por exemplo ao escrever o teste antes mesmo do código. \
 Esta, conhecida como <i>Test-driven development</i> (TDD), é extremamente útil e será vista em mais detalhes no capítulo sobre <a wip>Testes</a>.</p>\
+        '
+      }
+    ]
+  },
+
+  {
+    key: "simpleDataStructures",
+    title: "4 - Estruturas de Dados Simples",
+    exercises: [
+      {
+        title: "4.1 - Listas",
+        prefill: '\
+function divisivel(dividendo, divisor) {\n\
+  return dividendo % divisor == 0;\n\
+}\n\
+\n\
+function primo(x) {\n\
+}\n\
+\n\
+function contarPrimos(numeros) {\n\
+}\n\
+\n\
+var numeros = [10, 2, 5, 13, 27];\n\
+contarPrimos(numeros);\n\
+        ',
+        answer: '\
+function divisivel(dividendo, divisor) {\n\
+  return dividendo % divisor == 0;\n\
+}\n\
+\n\
+function primo(x) {\n\
+  if (x < 2) {\n\
+    return false;\n\
+  }\n\
+  var i = 2;\n\
+  while (i <= x / 2) {\n\
+    if (divisivel(x, i)) {\n\
+      return false;\n\
+    }\n\
+    i++;\n\
+  }\n\
+  return true;\n\
+}\n\
+\n\
+function contarPrimos(numeros) {\n\
+  var i = 0;\n\
+  var quantidade = 0;\n\
+  while (i < numeros.length) {\n\
+    if (primo(numeros[i])) {\n\
+      quantidade++;\n\
+    }\n\
+\n\
+    i++;\n\
+  }\n\
+  return quantidade;\n\
+}\n\
+\n\
+var numeros = [10, 2, 5, 13, 27];\n\
+contarPrimos(numeros);\n\
+        ',
+        testCases: [
+          { src: "primo(1)", expected: false },
+          { src: "primo(4)", expected: false },
+          { src: "primo(5)", expected: true },
+          { src: "contarPrimos([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);", expected: 4 },
+          { src: "contarPrimos([]);", expected: 0 },
+          { src: "contarPrimos([0, 1]);", expected: 0 },
+          { src: "contarPrimos([2, 3, 5, 7, 13]);", expected: 5 }
+        ],
+        explanation: '\
+<p>Até este momento você já esbarrou em listas duas vezes, e talvez tenha adivinhado como funcionam. Suas utilidades são inúmeras, e conhecer seu funcionamento \
+abre as portas para uma série de novas aplicações. Basicamente, uma <strong>lista</strong>, <strong>vetor</strong> ou <strong>array</strong> é uma estrutura de dados \
+contendo uma sequência ordenada de valores. Por exemplo: <code>var nomes = ["Marcos", "Lucas", "Daniel"];</code> inicializa a variável <code>nome</code> \
+com a lista de strings dada. \
+Para acessar o valor em qualquer posição, basta indicá-la entre colchetes: <code>nomes[0] == "Marcos"; nomes[1] == "Lucas"; nomes[2] == "Daniel";</code>. Como \
+pode perceber, a primeira posição de um array é zero, e a última é o número de elementos menos 1. Dessa forma, podemos percorrer os elementos do array da seguinte \
+forma (execute mentalmente o código abaixo e confirme sua corretude):</p>\
+<pre><code>\
+var nomes = ["Marcos", "Lucas", "Daniel"];\n\
+var i = 0;\n\
+while (i < nomes.length) {\n\
+  var nome = nomes[i];\n\
+  alert("O nome na posição " + i + " é " + nome);\n\
+  i++;\
+}\n\
+</code></pre>\
+<p>Repare que utilizamos uma variável especial <code>nomes.length</code>. Esta variável, ou <strong>propriedade</strong>, existe dentro de qualquer array, e será \
+melhor explicada em breve em <a wip>Objetos</a>. Basta saber que ela sempre contém o número exato de elementos da lista.</p>\
+<p>Em algumas linguagens de programação é permitido apenas armazenar um tipo de valor dentro de um array. Ou seja, um array de strings nunca poderá conter um número. \
+Em JavaScript, <code>var usuario = ["Marcos", 26]; // usuario[0] é o nome, usuário[1] é a idade</code> é uma instrução válida. De fato, existe uma variável especial \
+dentro de cada função chamada <code>arguments</code>, cujo valor é um array contendo todos os argumentos passados para ela, <strong>mesmo aqueles não capturados pelos \
+parâmetros</strong>:</p>\
+<pre><code>\
+function listarArgumentos(parametro) {\n\
+  var i = 0;\n\
+  while (i < arguments.length) {\n\
+    alert(arguments[i]);\n\
+    i++;\n\
+  }\n\
+}\n\
+\n\
+listarArgumentos();\n\
+listarArgumentos(1);\n\
+listarArgumentos(1, 2);\n\
+</code></pre>\
+<p>Embora seja permitido, não é recomendável armazenar diferentes tipos de valores dentro de um array. Isso cria a necessidade de um "contrato" garantindo quais \
+informações estão em quais posições. Ou seja, no exemplo <code>var usuario = ["Marcos", 26]</code>, cria-se um vínculo entre a posição 0, contendo o "nome", e a \
+posição 1, contendo a "idade". Isto, além de ser propenso à inconsistências devido à mudanças (imagine se fosse preciso inserir um novo campo "data de nascimento" \
+na primeira posição do array?), é uma má utilização de uma estrutura de dados cujo objetivo primário é <strong>listar</strong> coisas, e não <strong>descrever</strong> \
+coisas. Você verá uma estrutura mais apropriada à descrições em <a wip>Objetos</a>.</p>\
+<p>No exercício abaixo, você deverá implementar a função <code>contarPrimos</code>, que conta a quantidade de números primos dentro de uma lista qualquer de números. \
+Você também precisará implementar a função <code>primo</code>, que recebe um número qualquer e retorna <code>true</code> apenas se ele for primo. Relembrando um pouco de \
+matemática, um número primo é um número inteiro <strong>maior que 1</strong>, divisível <strong>apenas</strong> por 1 e ele mesmo (2, 3, 5, 7, 13, etc.). Dica: um número \
+<strong>nunca</strong> é divisível por um número <strong>maior que a metade de seu valor</strong> (por exemplo, no caso de 13, basta testar se é divisível até \
+6, pois 7 já passa de sua metade).</p>\
+        '
+      },
+
+      {
+        title: "4.2 - Alterando listas",
+        prefill: '\
+function push(lista, elemento) {\n\
+}\n\
+\n\
+function remover(lista, elemento) {\n\
+}\n\
+        ',
+        answer: '\
+function push(lista, elemento) {\n\
+  var novaLista = [];\n\
+  var i = 0;\n\
+  while (i < lista.length) {\n\
+    novaLista[novaLista.length] = lista[i];\n\
+    i++;\n\
+  }\n\
+  novaLista[novaLista.length] = elemento;\n\
+\n\
+  return novaLista;\n\
+}\n\
+\n\
+function remover(lista, elemento) {\n\
+  var novaLista = [];\n\
+  var i = 0;\n\
+  while (i < lista.length) {\n\
+    if (lista[i] != elemento) {\n\
+      novaLista[novaLista.length] = lista[i];\n\
+    }\n\
+    i++;\n\
+  }\n\
+\n\
+  return novaLista;\n\
+}\n\
+        ',
+        testCases: [
+          { src: "JSON.stringify(push([1, 2], 3));", expected: "[1,2,3]" },
+          { src: "JSON.stringify(remover([1, 2], 2));", expected: "[1]" },
+          { src: "var lista = [1, 2]; push(lista, 3); JSON.stringify(lista);", expected: "[1,2]" },
+          { src: "var lista = [1, 2]; remover(lista, 2); JSON.stringify(lista);", expected: "[1,2]" }
+        ],
+        explanation: '\
+<p>Obter apenas listas prontas não é muito útil na vida real: com frequência não sabemos com antecedência quantos e quais elementos entrarão na lista, além de precisar \
+atualizá-la durante a execução do programa. Para inserir novos elementos no final da lista, arrays possuem uma função chamada <code>lista.push(elemento)</code>. \
+No exemplo anterior, se ao invés de apenas contar quantos primos há numa lista quiséssemos retornar uma nova lista contendo apenas os primos contidos, poderíamos \
+usar a função abaixo:</p>\
+<pre><code>\
+function selecionarPrimos(numeros) {\n\
+  var primos = [];\n\
+  var i = 0;\n\
+  while (i < numeros.length) {\n\
+    var numero = numeros[i];\n\
+    if (primo(numero)) {\n\
+      primos.push(numero);\n\
+    }\n\
+    i++;\n\
+  }\n\
+\n\
+  return primos;\n\
+}\n\
+</code></pre>\
+<p>Uma forma de compreender como funciona a função <code>push</code> é observar o código análogo abaixo:</p>\
+<pre><code>\
+function push(lista, elemento) {\n\
+  lista[lista.length] = elemento;\n\
+}\n\
+\n\
+function selecionarPrimos(numeros) {\n\
+  var primos = [];\n\
+  var i = 0;\n\
+  while (i < numeros.length) {\n\
+    var numero = numeros[i];\n\
+    if (primo(numero)) {\n\
+      push(primos, numero);\n\
+    }\n\
+    i++;\n\
+  }\n\
+\n\
+  return primos;\n\
+}\n\
+</code></pre>\
+<p>O exemplo acima também serve para ilustrar a <strong>passagem por referência</strong>, a qual será explicada em mais detalhes em <a wip>Referências</a>. \
+Por enquanto, basta saber que a lista recebida como parâmetro pode sofrer alterações dentro da função, e estas alterações permanecerão. É diferente do que \
+aconteceria se fosse feita uma <stron>cópia</strong> da lista.</p>\
+<p>Embora hajam funções que facilitem a manipulação de listas, no exercício abaixo vamos implementar duas operações básicas para treinar suas habilidades em \
+escrever algoritmos: <code>push(lista, elemento)</code> insere o elemento no final da lista e <code>remover(lista, elemento)</code> remove da lista o elemento passado. \
+Mas atenção, as funções <code>push</code> e <code>remover</code> <strong>NÃO</strong> \
+devem alterar o estado da lista original, ou seja, precisam retornar uma nova lista. Por exemplo:</p>\
+<pre><code>\
+var lista = [1, 2, 3, 4];\n\
+\n\
+var novaLista = push(lista, 5);\n\
+novaLista == [1, 2, 3, 4, 5];\n\
+lista == [1, 2, 3, 4];\n\
+\n\
+novaLista = remover(lista, 1);\n\
+novaLista == [2, 3, 4];\n\
+lista == [1, 2, 3, 4];\n\
+</code></pre>\
         '
       }
     ]
