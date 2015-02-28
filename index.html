@@ -30,7 +30,7 @@
         há configurações de ambiente necessárias.</p>
         <p>Qualquer código utilizado ao longo dos exercícios pode ser 
         executado diretamente no console do próprio browser. Para abrí-lo no Google Chrome, basta apertar <kbd>F12</kbd> 
-        no Windows e Linux, ou <kbd>alt</kbd>+<kbd>command</kbd>+<kbd>i</kbd>, e clicar em <strong>Console</strong>. 
+        no Windows e Linux, ou <kbd>alt</kbd>+<kbd>command</kbd>+<kbd>i</kbd> no Mac, e clicar em <strong>Console</strong>. 
         Caso utilize outro browser, ver <a href="http://webmasters.stackexchange.com/a/77337">esta lista de atalhos</a>.</p>
         <p>Este curso funciona offline também, para isso basta salvar a página e acessá-la de seu browser normalmente.</p>
       </div>
@@ -44,7 +44,7 @@
 
     <ul class="nav nav-stacked" id="sidebar" data-spy="affix">
       <li ng-repeat="lesson in lessons">
-        <a href="{{'#' + lesson.key}}" data-toggle="collapse">{{lesson.title}}</a>
+        <a href="{{'#' + lesson.key}}">{{lesson.title}}</a>
         <ul class="nav">
           <li ng-repeat="exercise in lesson.exercises">
             <a href="{{'#' + lesson.key + '_' + $index}}">{{exercise.title}}</a>

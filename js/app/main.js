@@ -375,11 +375,11 @@ resulta em <code>true</code>.</p>\
         testCases: [{src: "nome", expected: "Daniel"}],
         explanation: '\
 <p>Apenas escrever expressões e valores no computador não teria muita utilidade se não pudéssemos guardar esses resultados para utilizá-los de novo. Imagine se precisássemos \
-reescrever um cálculo complexo a todo momento, ou pedir para o usuário digitar seu nome toda vez em que for usá-lo? Para isso, existem as <strong>variáveis</strong>. Elas \
+reescrever um cálculo complexo a todo momento, ou pedir para o usuário digitar seu nome toda vez em que fôssemos usá-lo? Para isso, existem as <strong>variáveis</strong>. Elas \
 funcionam como se fossem caixas rotuladas contendo um único valor de algum tipo. Existem duas operações que podem ser realizadas sobre variáveis: <strong>atribuir</strong> \
 um valor ou <strong>recuperar</strong> seu valor.\
-<p>Para se atribuir ("guardar" um valor dentro da caixa), usa-se o <code>nomeDaVariavel = [expressão]</code> (sim, \
-apenas um <code>=</code>), na qual <code>[expressão]</code> é qualquer expressão que resulte num valor (caso tenha dúvidas do que é uma expressão, leia de novo o exercício \
+<p>Para se atribuir ("guardar" um valor dentro da caixa), usa-se a sintaxe (regra "gramatical" da linguagem) <code>nomeDaVariavel = /* expressão */</code> (sim, \
+apenas um <code>=</code>), na qual <code>/* expressão */</code> é qualquer expressão que resulte num valor (caso tenha dúvidas do que é uma expressão, leia de novo o exercício \
 <a href="#valuesAndOperators_0">1.1 - Números</a>.</p>\
 <p>Para se acessar o valor de uma variável, basta chamar seu nome (ou <strong>identificador</strong>): <code>nomeDaVariavel</code>. Chamar um identificador não existente \
 ocasiona um erro: <code>ReferenceError: teste is not defined</code>. O nome de uma variável precisa \
@@ -389,8 +389,8 @@ e depois zero ou mais letras, caracteres especiais permitidos e números \
 <code>$_nome$1</code> (mas não faça isso pelamordedeus, vamos manter os nomes simples). Alguns nomes inválidos: <code>nome da variavel</code>, <code>1_nome</code>, \
 <code>nome!</code>.</p>\
 <p>Algo que pode confundir aqueles que se lembram das aulas de matemática é que a expressão <code>x = x + 1</code> é perfeitamente válida. Não apenas isso, mas \
-é uma das mais utilizadas. Para compreendermos o que está havendo, basta reparar na fórmula da atribuição: <code>nomeDaVariavel = [expressão]</code>. Repare \
-que <code>[expressão]</code> pode ser qualquer coisa, inclusive uma variável! Quando você utiliza uma variável dentro de uma expressão, você acessa o valor guardado \
+é uma das mais utilizadas. Para compreendermos o que está havendo, basta reparar na fórmula da atribuição: <code>nomeDaVariavel = /* expressão */</code>. Repare \
+que <code>/* expressão */</code> pode ser qualquer coisa, inclusive uma variável! Quando você utiliza uma variável dentro de uma expressão, você acessa o valor guardado \
 dentro dela. Portanto, <code>x = 1; x = x + 1</code> resulta com <code>x == 2</code>.</p>\
 <p>Por fim, é uma boa prática fazer com que a inicialização (primeira atribuição) de uma variável utilize a palavra-chave <code>var</code>. \
 Por exemplo: <code>var nome = "Marcos"</code>. Após isto, as atribuições podem ocorrer de forma normal. Embora não seja obrigatório, é importante se acostumar com \
@@ -485,7 +485,7 @@ i--;\n\
 alert(i);\n\
         ',
         explanation: '\
-<p>A sequência <code>variavel = variavel [operador] outraVariavel</code> é extremamente comum em programação, tanto que foram criados atalhos: \
+<p>A sequência <code>variavel = variavel /* operador */ outraVariavel</code> é extremamente comum em programação, tanto que foram criados atalhos: \
 <code>a += 1</code>, <code>a *= 2</code>, <code>a -= 1</code>, <code>a /= 2</code> e <code>a %= 2</code> são todos comandos válidos e equivalentes à sequência \
 mostrada, com os respectivos operadores. A expressão <code>saudacoes += " Daniel!"</code> também funciona como se esperaria em relação à strings. \
 Além disso, para um dos casos mais comuns de todos, o <strong>incremento</strong> (adição de 1) e <strong>decremento</strong> (subtração de 1) podem \
@@ -771,8 +771,10 @@ um jogador pode ser considerado vitorioso caso tenha mais pontos ao final da par
 pontos E tiver obtido alguns itens essenciais ao longo da partida. Imagine se tivéssemos que alterar essa regra em diversos locais diferentes? É muito mais fácil \
 caso tenhamos uma função <code>checarVitoria</code>, utilizada ao longo do código.</p>\
 <p>No exercício abaixo, foi escrita uma função que recebe um registro de empregado (provavelmente de algum arquivo ou banco de dados), e diz qual seu salário baseado \
-em seu cargo. A função <code>split(separador)</code> utilizada é "pertencente" às strings (mais sobre funções que pertencem à valores em <a wip>Objetos e Propriedades</a>), e \
-separa a string em uma lista de valores (ver <a wip>Listas</a>) nos locais em que for encontrada a string passada como argumento, nesse caso <code>"-"</code>. \
+em seu cargo. A função <code>split(separador)</code> utilizada é "pertencente" às strings (mais sobre funções que pertencem à valores em <a href="#simpleDataStructures_0">\
+Objetos e Propriedades</a>), e \
+separa a string em uma lista de valores (ver <a href="#simpleDataStructures_2">Listas</a>) nos locais em que for encontrada a string passada como argumento, nesse caso \
+<code>"-"</code>. \
 A função <code>trim()</code>, também pertencente às strings, remove os espaços em branco à esquerda e à direita da string, ou seja, "  uma string qualquer " vira \
 "uma string qualquer". Portanto, <code>"FUNCIONÁRIO - Daniel Rodrigues".split("-")[0]</code> resulta na string <code>"FUNCIONÁRIO"</code>, e \
 <code>"FUNCIONÁRIO - Daniel Rodrigues".split("-")[1].trim()</code> resulta em <code>"Daniel Rodrigues"</code>. Pede-se que refatore o código, \
@@ -788,7 +790,7 @@ ainda não ensinados, o foco deve ser na remoção da repetição; o aluno deve 
     title: "3 - Condicionais e Repetições",
     exercises: [
       {
-        title: "3.1 - Condicional simples",
+        title: "3.1 - Controle de Fluxo",
         prefill: '\
 if (2 * 3 == 5) {\n\
   alert("Entrou no condicional!");\n\
@@ -797,8 +799,9 @@ if (2 * 3 == 5) {\n\
         explanation: '\
 <p>A maior diferença entre um computador e outros tipos de máquinas como calculadoras é a capacidade de tomar decisões. \
 Sem isso, um programa serviria apenas para atender um único caso sempre, e mesmo assim não conseguiria resolver diversos \
-problemas. A estrutura condicional <code>if ([expressão booleana]) { [bloco de código] }</code> permite que, dada uma <code>[expressão booleana]</code> \
-qualquer, caso seu resultado seja <code>true</code>, o <code>[bloco de código]</code> seja executado. As chaves somente são necessárias caso o bloco de \
+problemas. A estrutura condicional <code>if (/* expressão booleana */) { /* bloco de código */ }</code> permite que, dada uma <code>/* expressão booleana */</code> \
+qualquer, caso seu resultado seja <code>true</code>, o <code>/* bloco de código */</code> seja executado. Ou seja, ela <strong>controla o fluxo</strong> da aplicação. \
+As chaves somente são necessárias caso o bloco de \
 código tenha mais de uma linha, mas vai por mim, use sempre com chaves; poupa muito trabalho na hora de debuggar. Por exemplo, em algum jogo:</p>\
 <pre><code>\
 vida = vida - dano;\n\
@@ -1071,7 +1074,7 @@ buscássemos o fatorial de 1000. Para realizar esse cálculo através de recurs�
 memória, a operação de troca de contexto é lenta, portanto precisamos de uma forma mais adequada de se realizar repetições. Daí entram as <strong>estruturas \
 de repetição</strong>, ou <strong>loops</strong>, ou <strong>iterações</strong>! Uma estrutura de repetição nada mais é do que um bloco de código \
 (que nem nas funções e condicionais) junto à uma condição. <strong>Enquanto (while)</strong> a condição for verdadeira, o bloco é executado. Neste \
-primeiro momento, veremos apenas o pai de todas as repetições: <code>while ([expressão booleana]) { [bloco de código] }</code>. Veja este exemplo:</p>\
+primeiro momento, veremos apenas o pai de todas as repetições: <code>while (/* expressão booleana */) { /* bloco de código */ }</code>. Veja este exemplo:</p>\
 <pre><code>\
 var option = null;\n\
 while (option == null) {\n\
@@ -1127,7 +1130,7 @@ function fatorial(x) {\n\
 </code></pre>\
 <p>Este formato, com a inicialização de uma <code>variável de controle do loop</code>, com o incremento/decremento da mesma sendo executado ao final do \
 bloco de código até que um limite bem definido o faça encerrar a repetição, é tão comum que, como em geral acontece na programação, foi criado um atalho \
-para ele, o qual será explicado em <a wip>Repetição definida: for</a>. Também vale ressaltar que a variável <code>i</code> foge às recomendações sobre \
+para ele, o qual será explicado em <a href="#simpleDataStructures_4">Loops definidos</a>. Também vale ressaltar que a variável <code>i</code> foge às recomendações sobre \
 identificadores descritivos. Este é um caso especial, pois <code>i</code> é comumente utilizada como variável contendo o <strong>índice</strong> atual \
 em uma iteração; é uma convenção. É um caso análogo às variáveis convencionadas da física, como <code>m</code> para massa e <code>F</code> para força. \
 O que podemos perceber nas soluções apresentadas é que perde-se a \
@@ -1479,7 +1482,8 @@ contarPrimos(numeros);\n\
 abre as portas para uma série de novas aplicações. Basicamente, uma <strong>lista</strong>, <strong>vetor</strong> ou <strong>array</strong> é uma estrutura de dados \
 contendo uma sequência ordenada de valores. Por exemplo: <code>var nomes = ["Marcos", "Lucas", "Daniel"];</code> inicializa a variável <code>nome</code> \
 com a lista de strings dada. \
-Para acessar o valor em qualquer posição, basta indicá-la entre colchetes: <code>nomes[0] == "Marcos"; nomes[1] == "Lucas"; nomes[2] == "Daniel";</code>. Como \
+Para acessar o valor em qualquer <strong>posição</strong>, ou <strong>índice</strong>, ou <strong>index</strong>, basta indicá-lo entre colchetes: \
+<code>nomes[0] == "Marcos"; nomes[1] == "Lucas"; nomes[2] == "Daniel";</code>. Como \
 pode perceber, a primeira posição de um array é zero, e a última é o número de elementos menos 1. Dessa forma, podemos percorrer os elementos do array da seguinte \
 forma (execute mentalmente o código abaixo e confirme sua corretude):</p>\
 <pre><code>\
@@ -1488,11 +1492,10 @@ var i = 0;\n\
 while (i < nomes.length) {\n\
   var nome = nomes[i];\n\
   alert("O nome na posição " + i + " é " + nome);\n\
-  i++;\
+  i++;\n\
 }\n\
 </code></pre>\
-<p>Repare que utilizamos uma variável especial <code>nomes.length</code>. Esta variável, ou <strong>propriedade</strong>, existe dentro de qualquer array, e será \
-melhor explicada em breve em <a wip>Objetos</a>. Basta saber que ela sempre contém o número exato de elementos da lista.</p>\
+<p>Repare que utilizamos a propriedade <code>nomes.length</code>. Esta propriedade existe dentro de qualquer array, sempre contém o número exato de elementos da lista.</p>\
 <p>Em algumas linguagens de programação é permitido apenas armazenar um tipo de valor dentro de um array. Ou seja, um array de strings nunca poderá conter um número. \
 Em JavaScript, <code>var usuario = ["Marcos", 26]; // usuario[0] é o nome, usuário[1] é a idade</code> é uma instrução válida. De fato, existe uma variável especial \
 dentro de cada função chamada <code>arguments</code>, cujo valor é um array contendo todos os argumentos passados para ela, <strong>mesmo aqueles não capturados pelos \
@@ -1514,7 +1517,7 @@ listarArgumentos(1, 2);\n\
 informações estão em quais posições. Ou seja, no exemplo <code>var usuario = ["Marcos", 26]</code>, cria-se um vínculo entre a posição 0, contendo o "nome", e a \
 posição 1, contendo a "idade". Isto, além de ser propenso à inconsistências devido à mudanças (imagine se fosse preciso inserir um novo campo "data de nascimento" \
 na primeira posição do array?), é uma má utilização de uma estrutura de dados cujo objetivo primário é <strong>listar</strong> coisas, e não <strong>descrever</strong> \
-coisas. Você verá uma estrutura mais apropriada à descrições em <a wip>Objetos</a>.</p>\
+coisas. Para este objetivo, utilize objetos: <code>var usuario = { nome: "Marcos", idade: 26 }</code>.</p>\
 <p>No exercício abaixo, você deverá implementar a função <code>contarPrimos</code>, que conta a quantidade de números primos dentro de uma lista qualquer de números. \
 Você também precisará implementar a função <code>primo</code>, que recebe um número qualquer e retorna <code>true</code> apenas se ele for primo. Relembrando um pouco de \
 matemática, um número primo é um número inteiro <strong>maior que 1</strong>, divisível <strong>apenas</strong> por 1 e ele mesmo (2, 3, 5, 7, 13, etc.). Dica: um número \
@@ -1524,12 +1527,12 @@ matemática, um número primo é um número inteiro <strong>maior que 1</strong>
       },
 
       {
-        title: "4.2 - Alterando listas",
+        title: "4.4 - Alterando listas",
         prefill: '\
 function push(lista, elemento) {\n\
 }\n\
 \n\
-function remover(lista, elemento) {\n\
+function remove(lista, elemento) {\n\
 }\n\
         ',
         answer: '\
@@ -1545,7 +1548,7 @@ function push(lista, elemento) {\n\
   return novaLista;\n\
 }\n\
 \n\
-function remover(lista, elemento) {\n\
+function remove(lista, elemento) {\n\
   var novaLista = [];\n\
   var i = 0;\n\
   while (i < lista.length) {\n\
@@ -1560,13 +1563,13 @@ function remover(lista, elemento) {\n\
         ',
         testCases: [
           { src: "JSON.stringify(push([1, 2], 3));", expected: "[1,2,3]" },
-          { src: "JSON.stringify(remover([1, 2], 2));", expected: "[1]" },
+          { src: "JSON.stringify(remove([1, 2], 2));", expected: "[1]" },
           { src: "var lista = [1, 2]; push(lista, 3); JSON.stringify(lista);", expected: "[1,2]" },
-          { src: "var lista = [1, 2]; remover(lista, 2); JSON.stringify(lista);", expected: "[1,2]" }
+          { src: "var lista = [1, 2]; remove(lista, 2); JSON.stringify(lista);", expected: "[1,2]" }
         ],
         explanation: '\
 <p>Obter apenas listas prontas não é muito útil na vida real: com frequência não sabemos com antecedência quantos e quais elementos entrarão na lista, além de precisar \
-atualizá-la durante a execução do programa. Para inserir novos elementos no final da lista, arrays possuem uma função chamada <code>lista.push(elemento)</code>. \
+atualizá-la durante a execução do programa. Para inserir novos elementos no final da lista, arrays possuem um método chamado <code>lista.push(elemento)</code>. \
 No exemplo anterior, se ao invés de apenas contar quantos primos há numa lista quiséssemos retornar uma nova lista contendo apenas os primos contidos, poderíamos \
 usar a função abaixo:</p>\
 <pre><code>\
@@ -1606,11 +1609,11 @@ function selecionarPrimos(numeros) {\n\
 </code></pre>\
 <p>O exemplo acima também serve para ilustrar a <strong>passagem por referência</strong>, a qual será explicada em mais detalhes em <a wip>Referências</a>. \
 Por enquanto, basta saber que a lista recebida como parâmetro pode sofrer alterações dentro da função, e estas alterações permanecerão. É diferente do que \
-aconteceria se fosse feita uma <stron>cópia</strong> da lista.</p>\
+aconteceria se fosse feita uma <strong>cópia</strong> da lista.</p>\
 <p>Embora hajam funções que facilitem a manipulação de listas, no exercício abaixo vamos implementar duas operações básicas para treinar suas habilidades em \
-escrever algoritmos: <code>push(lista, elemento)</code> insere o elemento no final da lista e <code>remover(lista, elemento)</code> remove da lista o elemento passado. \
-Mas atenção, as funções <code>push</code> e <code>remover</code> <strong>NÃO</strong> \
-devem alterar o estado da lista original, ou seja, precisam retornar uma nova lista. Por exemplo:</p>\
+escrever algoritmos: <code>push(lista, elemento)</code> insere o elemento no final da lista e <code>remove(lista, elemento)</code> remove da lista o elemento passado. \
+Mas atenção, as funções <code>push</code> e <code>remove</code> <strong>NÃO</strong> \
+devem alterar o estado da lista original, ou seja, precisam retornar uma <strong>nova</strong> lista. Por exemplo:</p>\
 <pre><code>\
 var lista = [1, 2, 3, 4];\n\
 \n\
@@ -1618,11 +1621,239 @@ var novaLista = push(lista, 5);\n\
 novaLista == [1, 2, 3, 4, 5];\n\
 lista == [1, 2, 3, 4];\n\
 \n\
-novaLista = remover(lista, 1);\n\
+novaLista = remove(lista, 1);\n\
 novaLista == [2, 3, 4];\n\
 lista == [1, 2, 3, 4];\n\
 </code></pre>\
         '
+      },
+
+      {
+        title: "4.5 - Loops definidos",
+        prefill: '\
+function primo(x) {\n\
+  if (x < 2) {\n\
+    return false;\n\
+  }\n\
+  var i = 2;\n\
+  while (i <= x / 2) {\n\
+    if (x % i == 0) {\n\
+      return false;\n\
+    }\n\
+    i++;\n\
+  }\n\
+  return true;\n\
+}\n\
+\n\
+function selecionarPrimos(numeros) {\n\
+  var primos = [];\n\
+  var i = 0;\n\
+  while (i < numeros.length) {\n\
+    var numero = numeros[i];\n\
+    if (primo(numero)) {\n\
+      primos.push(numero);\n\
+    }\n\
+    i++;\n\
+  }\n\
+\n\
+  return primos;\n\
+}\n\
+\n\
+alert(selecionarPrimos([2, 3, 4, 5, 6]));\n\
+        ',
+        answer: '\
+function primo(x) {\n\
+  if (x < 2) {\n\
+    return false;\n\
+  }\n\
+  for (var i = 2; i <= x / 2; i++) {\n\
+    if (x % i == 0) {\n\
+      return false;\n\
+    }\n\
+  }\n\
+  return true;\n\
+}\n\
+\n\
+function selecionarPrimos(numeros) {\n\
+  var primos = [];\n\
+    for (var i = 0; i < numeros.length; i++) {\n\
+    var numero = numeros[i];\n\
+    if (primo(numero)) {\n\
+      primos.push(numero);\n\
+    }\n\
+  }\n\
+\n\
+  return primos;\n\
+}\n\
+\n\
+alert(selecionarPrimos([2, 3, 4, 5, 6]));\n\
+        ',
+        explanation: '\
+<p>Foi dito anteriormente que havia um atalho para uma forma muito comum de repetição, e ele <strong>geralmente</strong> acompanha o uso de listas. Trata-se \
+do loop definido, ou seja, um loop no qual é conhecido de antemão quantas iterações serão necessárias. A sintaxe para este atalho é \
+<code>for (/* inicialização */; /* teste */; /* atualização da variável de controle */) { /* bloco de código */ }</code>, e ele é muito útil para varrer arrays. Por exemplo:</p>\
+<pre><code>\
+for (var i = 0; i < lista.length; i++) {\n\
+  alert(lista[i]);\n\
+}\n\
+</code></pre>\
+<p>É equivalente à:</p>\
+<pre><code>\
+var i = 0;\n\
+while (i < lista.length) {\n\
+  alert(lista[i]);\n\
+  i++;\n\
+}\n\
+</code></pre>\
+<p>Repare que as etapas são arbitrárias. Durante a inicialização, é possível atribuir qualquer valor à variável (por exemplo, <code>var i = lista.length - 1</code>), \
+assim como na etapa de teste é possível colocar qualquer expressão booleana (por exemplo, <code>i > 0</code>), e, por fim, a atualização da variável de controle pode ser \
+de qualquer valor (por exemplo, <code>i -= 2</code>). Portanto, <code>for (var i = lista.length; i > 0; i -= 2) { /*bloco de código*/ }</code> varre a lista de seu final até \
+seu início, pulando um elemento a cada iteração (verifique).</p>\
+<p>Neste exercício, refaça o exemplo visto anteriormente utilizando <code>for</code> ao invés de <code>while</code>.</p>\
+        '
+      },
+
+      {
+        title: "4.6 - Juntando tudo",
+        prefill: '\
+function indexOf(lista, objeto) {\n\
+}\n\
+\n\
+function remove(lista, posicao) {\n\
+}\n\
+\n\
+function collision(objeto1, objeto2) {\n\
+}\n\
+\n\
+function update(player, bullets, scene) {\n\
+  // Verificar para cada bala se ela atingiu o jogador.\n\
+  // Em caso positivo, aplicar o dano à vida do jogador e removê-la da lista.\n\
+  // Caso contrário, verificar se ela saiu do cenário.\n\
+  // Retornar true caso o player permaneça vivo.\n\
+}\n\
+        ',
+        answer: '\
+function indexOf(lista, objeto) {\n\
+  for (var i = 0; i < lista.length; i++) {\n\
+    if (lista[i] == objeto) {\n\
+      return i;\n\
+    }\n\
+  }\n\
+  return -1;\n\
+}\n\
+\n\
+function remove(lista, objeto) {\n\
+  var posicao = indexOf(lista, objeto);\n\
+  if (posicao == -1) {\n\
+    return;\n\
+  }\n\
+\n\
+  for (var i = posicao + 1; i < lista.length; i++) {\n\
+    lista[i - 1] = lista[i];\n\
+  }\n\
+  lista.length--;\n\
+}\n\
+\n\
+function collision(objeto1, objeto2) {\n\
+    return !(\n\
+        objeto1.x > objeto2.x + objeto2.width  ||\n\
+        objeto1.x + objeto1.width < objeto2.x  ||\n\
+        objeto1.y > objeto2.y + objeto2.height ||\n\
+        objeto1.y + objeto1.height < objeto2.y\n\
+    );\n\
+}\n\
+\n\
+function update(player, bullets, scene) {\n\
+  var bulletsToRemove = [];\n\
+  for (var i = 0; i < bullets.length; i++) {\n\
+    var bullet = bullets[i];\n\
+    if (collision(bullet, player)) {\n\
+      player.life -= bullet.damage;\n\
+      bulletsToRemove.push(bullet);\n\
+    } else if (!collision(bullet, scene)) {\n\
+      bulletsToRemove.push(bullet);\n\
+    }\n\
+  }\n\
+\n\
+  for (var i = 0; i < bulletsToRemove.length; i++) {\n\
+    remove(bullets, bulletsToRemove[i]);\n\
+  }\n\
+\n\
+  return player.life > 0;\n\
+}\n\
+        ',
+        testCases: [
+          { src: 'indexOf([1,2,3], 2);', expected: 1 },
+          { src: 'indexOf([1,2,3], 4);', expected: -1 },
+          { src: 'var lista = [1,2,3]; remove(lista, 1); JSON.stringify(lista);', expected: "[2,3]" },
+          { src: 'var lista = [1,2,3]; remove(lista, 2); JSON.stringify(lista);', expected: "[1,3]" },
+          { src: 'var lista = [1,2,3]; remove(lista, 3); JSON.stringify(lista);', expected: "[1,2]" },
+          { src: 'var lista = [1,2,3]; remove(lista, 4); JSON.stringify(lista);', expected: "[1,2,3]" },
+          // Killing player
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 1}; var bullets = [{x: 1, y: 1, width: 1, height: 1, damage: 1}, {x: 2, y: 1, width: 1, height: 2, damage: 1}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene);', expected: false },
+          // Player's life after killed
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 1}; var bullets = [{x: 1, y: 1, width: 1, height: 1, damage: 1}, {x: 2, y: 1, width: 1, height: 2, damage: 1}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene); player.life;', expected: -1 },
+          // Removing bullets after hitting player
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 2}; var bullets = [{x: 1, y: 1, width: 1, height: 1, damage: 1}, {x: 2, y: 1, width: 1, height: 2, damage: 1}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene); bullets.length;', expected: 0 },
+          // Player hit but survived
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 2}; var bullets = [{x: 1, y: 1, width: 1, height: 1, damage: 1}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene);', expected: true },
+          // Player's life with different prior life/damage values
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 3}; var bullets = [{x: 1, y: 1, width: 1, height: 1, damage: 2}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene); player.life;', expected: 1 },
+          // Missed player
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 2}; var bullets = [{x: 4, y: 1, width: 1, height: 1, damage: 1}, {x: 2, y: 4, width: 1, height: 2, damage: 1}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene);', expected: true },
+          // Player's life after bullets missing
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 2}; var bullets = [{x: 4, y: 1, width: 1, height: 1, damage: 1}, {x: 2, y: 4, width: 1, height: 2, damage: 1}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene); player.life;', expected: 2 },
+          // Bullets should not be removed
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 2}; var bullets = [{x: 4, y: 1, width: 1, height: 1, damage: 1}, {x: 2, y: 4, width: 1, height: 2, damage: 1}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene); bullets.length;', expected: 2 },
+          // Bullet out of scene should be removed
+          { src: 'var player = {x: 1, y: 1, width: 2, height: 2, life: 2}; var bullets = [{x: 4, y: 1, width: 1, height: 1, damage: 1}, {x: -4, y: 4, width: 1, height: 2, damage: 1}]; var scene = {x: 0, y: 0, width: 800, height: 600}; update(player, bullets, scene); bullets.length;', expected: 1 },
+        ],
+        explanation: '\
+<p>Com as ferramentas que possui agora, você já é capaz de escrever qualquer programa existente. É claro que você ainda precisará estudar \
+como juntar essas peças, como se comunicar com outros softwares e técnicas avançadas que tornam seu código mais manutenível e expressivo, mas no fim, \
+tudo se resume à esses blocos básicos. Para finalizar este capítulo, vamos juntar os vários conhecimentos que você obteve até agora e demonstrar o poder \
+que eles lhe proporcionam. Especificamente, vamos trabalhar com uma <strong>lista</strong> de <strong>objetos</strong> e processar seus dados utilizando \
+as estruturas de controle de fluxo, de repetição, e as operações vistas até agora.</p>\
+<p>Para encerrar este capítulo, vamos fazer um exercício mais complexo (veja como uma prova). Considere que você está dentro de um <i>frame</i> de um jogo 2D e precisa \
+implementar a função <code>update(player, bullets, scene)</code>, que atualiza os objetos de jogo, para saber se o seu personagem foi atingido pelas \
+balas que estão voando pelo cenário. Considere também que, se uma bala atingir o jogador ou sair dos limites do cenário, ela deve ser removida da lista \
+(<code>remove(bullets, bullet)</code>).</p>\
+<p>Para remover um item da lista sem gerar uma nova (como no exercício anterior), você deverá identificar a posição do elemento a ser removido (por exemplo, \
+<code>indexOf(bullets, bullet) == 3</code>), <strong>empurrar</strong> os outros uma posição para trás, até o final da lista (por exemplo: \
+<code>bullets[3] = bullets[4]; bullets[4] = bullets[5]; ... ; bullets[bullets.length - 2] = bullets[bullets.length - 1];</code>), e, por fim, \
+atualizar o tamanho da mesma (<code>bullets.length--</code>). Repare que você <strong>nunca</strong> deve remover ou adicionar elementos em uma lista \
+<strong>durante</strong> uma iteração da mesma, uma vez que você altera o posicionamento dos elementos e cria uma incompatibilidade com a variável de controle do loop. \
+Para identificar o elemento a ser removido, o operador <code>==</code> pode ser utilizado normalmente, ainda que \
+as balas sejam objetos. Vale mencionar que dois objetos com as mesmas priopriedades e mesmos valores (<code>var pessoa1 = { nome: "Marcos" }; \
+var pessoa2 = { nome: "Marcos" };</code>) <strong>não</strong> são iguais (<code>pessoa1 != pessoa2</code>), mas que um objeto é igual à si próprio (<code>pessoa1 == \
+pessoa1</code> <i class="troll" />). Além disso, a função <code>indexOf</code> deve retornar <code>-1</code> caso não consiga encontrar o elemento procurado.</p>\
+<p>Cada bala, assim como o jogador, possui as propriedades <code>x</code> (posição x no cenário), <code>y</code> (posição y no cenário), <code>width</code> (largura), \
+<code>height</code> (altura). As balas também possuem a propriedade <code>damage</code> (dano causado ao jogador), e o jogador possui a propriedade <code>life</code> (vida). \
+O retângulo que define a <strong>caixa de colisão</strong> (espaço utilizado para detectar colisões com o objeto) de cada bala ou do personagem possui os vértices \
+nas posições: (x, y) (esquerdo-superior), (x + width, y) (direito-superior), (x, y + height) (inferior-esquerdo) e (x + width, y + height) (inferior-direito). Ou seja, \
+a lateral esquerda de um objeto é dada por <code>x</code>, a direita por <code>x + width</code>, a superior por <code>y</code> e a inferior por <code>y + height</code>. \
+Em computação gráfica, a dimensão y costuma começar em 0 no topo e aumentar para baixo. Sendo assim, para identificar se dois objetos colidiram, basta saber se \
+suas caixas de colisão se sobrepõem.</p>\
+<img src="images/collision-box.png" />\
+<p>Para calcular se uma <code>bullet</code> está dentro da caixa de colisão do <code>player</code>, basta saber se ela <strong>não</strong> está fora (lembra que foi dito \
+algum tempo atrás que às vezes é mais fácil compreender o problema ao se inverter a lógica?):</p>\
+<pre><code>\
+!(  // nega o teste de se a bala está fora do jogador\n\
+    bullet.x > player.x + player.width  || // a bala está à direita do jogador\n\
+    bullet.x + bullet.width < player.x  || // a bala está à esquerda do jogador\n\
+    bullet.y > player.y + player.height || // a bala está embaixo do jogador\n\
+    bullet.y + bullet.height < player.y    // a bala está acima do jogador\n\
+)\n\
+</code></pre>\
+<p>Por fim, o cenário (<strong>scene</strong>) possui apenas as propriedades <code>x</code>, <code>y</code>, <code>width</code> e <code>height</code>, sendo que \
+seus <code>x</code> e <code>y</code> são ambos iguais à zero. Isto significa que o cenário é representado por um retângulo, e, portanto, pode-se utilizar <strong>a mesma \
+função</strong> que testa se uma bala atingiu o jogador para verificar se uma bala <strong>não</strong> está mais dentro do cenário. Você consegue adivinhar como?</p>\
+<p>Ao final da função <code>update</code>, retorne <code>true</code> caso o jogador permaneça vivo, ou <code>false</code> caso tenha morrido.</p>\
+        '
+      },
+
+      {
+        title: "4.7 - EXTRA: Modelagem e Abstração",
       }
     ]
   }
